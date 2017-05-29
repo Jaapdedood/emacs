@@ -1,0 +1,63 @@
+;;; -*- coding: utf-8 -*-
+
+;; ----- ido-last-directory-list -----
+(
+ ("/mnt/c/WINHOME/" . "EMACS/")
+ ("/home/" . "jpdd/")
+ ("/home/jpdd/.emacs.d/" . "config/")
+ ("/mnt/c/Users/" . "jaapd/")
+ ("/mnt/c/" . "WINHOME/")
+ ("/mnt/" . "c/")
+ ("/" . "mnt/")
+ ("/home/jpdd/" . ".emacs.d/")
+)
+
+;; ----- ido-work-directory-list -----
+(
+ "/home/jpdd/.emacs.d/config/"
+ "/mnt/c/WINHOME/"
+ "/home/jpdd/.emacs.d/"
+)
+
+;; ----- ido-work-file-list -----
+(
+ "init-coding-gen.el"
+ "init-coding-web.el"
+ "orgmodebasics.org"
+ "test.org"
+ "test.c"
+ "init.el"
+ "init-doc-editing.el"
+)
+
+;; ----- ido-dir-file-cache -----
+(
+ ("/home/jpdd/.emacs.d/" (22827 28580 365000 700000) "snippets/" "places" "init.el~" "init.el" "ido.last" "elpa/" "config/" "backups/" "auto-save-list/" "#init.el#" "../" "./")
+
+ ("/mnt/c/WINHOME/" (22827 28580 296672 500000) "test.org" "test.c" "orgmodebasics.tex" "orgmodebasics.org" "EMACS/" "auto/" "../" "./")
+
+ ("/home/jpdd/.emacs.d/config/" (22827 28576 875356 700000) "init-doc-editing.el" "init-coding-web.el" "init-coding-gen.el" "../" "./")
+
+ ("/home/jpdd/.emacs.d/snippets/" (22827 20449 462492 500000) "yaml-mode/" "web-mode/" "udev-mode/" "typerex-mode/" "tuareg-mode/" "text-mode/" "sql-mode/" "snippet-mode/" "sh-mode/" "scala-mode/" "rust-mode/" "ruby-mode/" "rst-mode/" "rename_add_contr.py" "python-mode/" "prog-mode/" "perl-mode/" "org-mode/" "octave-mode/" "nxml-mode/" "nsis-mode/" "nix-mode/" "nesc-mode/" "ned-mode/" "markdown-mode/" "malabar-mode/" "makefile-mode/" "makefile-gmake-mode/" "makefile-bsdmake-mode/" "makefile-automake-mode/" "m4-mode/" "lua-mode/" "lisp-mode/" "lisp-interaction-mode/" "latex-mode/" "js3-mode/" "js2-mode/" "js-mode/" "java-mode/" "html-mode/" "haskell-mode/" "groovy-mode/" "go-mode/" "git-commit-mode/" "faust-mode/" "f90-mode/" "erlang-mode/" "erc-mode/" "ensime-mode/" "enh-ruby-mode/" "emacs-lisp-mode/" "elixir-mode/" "dix-mode/" "css-mode/" "csharp-mode/" "cpp-omnet-mode/" "cperl-mode/" "conf-unix-mode/" "cmake-mode/" "clojure-mode/" "cider-repl-mode/" "chef-mode/" "cc-mode/" "c-mode/" "c++-mode/" "applescript-mode/" "apples-mode/" "antlr-mode/" "README.md" "LICENSE" "CONTRIBUTORS.txt" "../" "./")
+
+ ("/mnt/c/WINHOME/EMACS/" (22826 25195 185654 400000) "var/" "share/" "libexec/" "lib/" "include/" "bin/" "../" "./")
+
+ ("/mnt/c/" (22827 14515 51021 900000) "WINHOME/" "Windows.old/" "Windows/" "Users/" "System Volume Information/" "Riot Games/" "Recovery/" "ProgramData/" "Program Files (x86)/" "Program Files/" "PerfLogs/" "OneDriveTemp/" "Intel/" "inetpub/" "ESD/" "DRIVERS/" "Config.Msi/" "Cadence/" "Autodesk/" "64d5b35d1e64df6771586470b5/" "$Windows.~WS/" "$Recycle.Bin/" "../" "./")
+
+ ("/home/jpdd/" (22826 33861 327989 500000) ".wget-hsts" ".sudo_as_admin_successful" ".profile" ".gnupg/" ".emacs.d/" ".bashrc" ".bash_logout" ".bash_history" "../" "./")
+
+ ("/mnt/c/Users/jaapd/Downloads/" (22826 30504 902409 0) "desktop.ini" "arduino-1.8.2-windows.exe" "17.2-2016_S017_OrCAD_Lite_All Products.zip" "17.2-2016_S017_OrCAD_Lite_All Products/" "../" "./")
+
+ ("/home/" (22824 60209 598141 0) "jpdd/" "../" "./")
+
+ ("/home/jpdd/.emacs.d/elpa/" (22826 26611 452211 200000) "gnupg/" "better-defaults-0.1.2/" "archives/" "../" "./")
+
+ ("/mnt/" (22824 60190 993431 700000) "c/" "../" "./")
+
+ ("/mnt/c/Users/" (22824 56102 368271 0) "Public/" "jaapd/" "desktop.ini" "Default/" "../" "./")
+
+ ("/mnt/c/Users/jaapd/" (22826 10204 613041 800000) "Videos/" "Searches/" "Saved Games/" "Roaming/" "Pictures/" "OneDrive/" "ntuser.ini" "NTUSER.DAT{87d27df5-4283-11e7-b1ce-fc6ee22d5495}.TMContainer00000000000000000002.regtrans-ms" "NTUSER.DAT{87d27df5-4283-11e7-b1ce-fc6ee22d5495}.TMContainer00000000000000000001.regtrans-ms" "NTUSER.DAT{87d27df5-4283-11e7-b1ce-fc6ee22d5495}.TM.blf" "NTUSER.DAT{87d27df4-4283-11e7-b1ce-fc6ee22d5495}.TxR.blf" "NTUSER.DAT{87d27df4-4283-11e7-b1ce-fc6ee22d5495}.TxR.2.regtrans-ms" "NTUSER.DAT{87d27df4-4283-11e7-b1ce-fc6ee22d5495}.TxR.1.regtrans-ms" "NTUSER.DAT{87d27df4-4283-11e7-b1ce-fc6ee22d5495}.TxR.0.regtrans-ms" "ntuser.dat.LOG2" "ntuser.dat.LOG1" "NTUSER.DAT" "Music/" "Links/" "IntelGraphicsProfiles/" "Favorites/" "Downloads/" "Documents/" "Desktop/" "Contacts/" "AppData/" "../" "./")
+)
+
+;; ----- ido-unc-hosts-cache -----
+t

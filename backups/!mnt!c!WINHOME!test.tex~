@@ -1,0 +1,41 @@
+% Created 2017-05-28 Sun 14:28
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\author{Jaap de Dood}
+\date{\today}
+\title{}
+\hypersetup{
+ pdfauthor={Jaap de Dood},
+ pdftitle={},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 24.5.1 (Org mode 9.0.7)}, 
+ pdflang={English}}
+\begin{document}
+
+\tableofcontents
+
+\section{Basics}
+\label{sec:orgff35ad3}
+\subsection{Open/close tabs using TAB}
+\label{sec:orge5a7909}
+\subsubsection{Open/close ALL tabs using SHIFT-TAB}
+\label{sec:org5fe815e}
+\subsection{{\bfseries\sffamily TODO} can be changed to DONE by C-c-t}
+\label{sec:orgfe54c5f}
+\subsection{Open links using C-c C-o}
+\label{sec:org3062ece}
+\end{document}
