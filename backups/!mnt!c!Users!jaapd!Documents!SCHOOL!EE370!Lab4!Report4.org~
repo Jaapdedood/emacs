@@ -1,0 +1,41 @@
+#+TITLE:EE370 Lab 4
+#+SUBTITLE:Instructor: Paula Quintana
+#+AUTOR: Jaap de Dood
+#+DATE: September 24 2017
+#+OPTIONS: toc:nil
+#+LaTeX_HEADER: \usepackage[margin=1.0in]{geometry}
+* Activity 4
+In this activity the properties of a bipolar junction transistor (BJT) were explored using the BASIC Stamp board and StampPlot software. First, the following circuit was built and the DataMonitoring.bs2 program from the previous lab was uploaded to the board.
+#+ATTR_LATEX: :width 200px
+file:image1.jpg
+The main feature of this circuit is the potentiometer connected across the 5V line to ground with the center tap connected to the base of a transistor. By turning the potentiometer, the 
+resistance and hence the current to the base of the transistor is varied.\newline\newline
+The amount of current at the base of the BJT,I_B controls the collector current, I_C. Hence, varying the potentiometer varies the current conducted by the BJT. Below a certain base current, the BJT will act like an open switch as the resistance from collector to emitter is very high. This was noticed when conducting the experiment as the LED would not turn on until the potentiometer had been turned past a certain point. \newline Plotting V_P using StamPlot:
+#+ATTR_LATEX: :width 200px
+file:image2.jpg
+It can be seen on the plot how the digital output from the ADC only becomes HIGH when the value of V_P falls slightly below 0.7V. As V_P drops, V_{RB} increases and hence I_B increases. When the ADC was then connected to the collector of the BJT the following plot was made:
+#+ATTR_LATEX: :width 300px
+file:image3.jpg
+As the potentiometer was turned in the same direction that caused V_P to drop, V_{CE} increased as shown on the plot. This time, the digital output of the ADC became HIGH as V_CE increased to above roughly 1.4V. For a large part of the turn in the potentiometer no effect was seen on the graph. This is because a potentiometer increases resistance logarithmically so only a small part of the turn operates the range of resistances we require. After turning the potentiometer a certain distance V_CE no longer increases, as the transistor is now in the saturation region. At this point, the transistor acts as a closed switch. On the plot this can be seen at roughly 4.8V, which is correct since V_{dd} = 5V and at saturation a transistor drops around 0.7V. 
+* Activity 5
+In this activity the same circuit and code were used as in Activity 4. However, this time a different StampPlot macro was used to plot the data. Rather than plotting voltage against time, this macro plots a DC load line for R_C and the power dissipated by the transistor. By running macro and slowly turning the potentiometer the following plot was drawn:
+#+ATTR_LATEX: :width 300px
+file:image4.jpg
+As you can see I_C linearly decreases as V_C Increases. This is because at saturation the transistor is fully conducting hence V_C is close to 0V and I_C is at a maximum. As V_C increases, this means the transistor is allowing less current through the collector. As the power dissipated by the transistor is the product of I_C and V_C the max power occurs halfway between saturation and cutoff.\newline\newline
+Next, the resistor at the collector of the transistor, R_C, was changed from 1k\Omega to 10k\Omega which produced the following plot.
+#+ATTR_LATEX: :width 300px
+file:image5.jpg
+This time the current and power values are smaller by a factor of 10 as the resistance was increased by a factor of 10. One aspect not shown on the plot is the movement of the potentiometer during this plot. It was extremely difficult to obtain a good resolution of samples for this plot by turning the potentiometer as a very slight turn of the potentiometer covered the entire active range of the transistor. This is because with a larger resistance at the collector of the BJT, I_SAT is now much smaller, hence, a smaller I_B is required for saturation and a smaller turn of the potentiometer.\newline\newline
+Next, R_C was changed back to 1k\Omega but the resistance at the base, R_B, was changed from 47k\Omega to 10k\Omega. This produced the following plot:
+#+ATTR_LATEX: :width 300px
+file:image6.jpg
+This plot looks identical to the first plot from this activity, as the current and power values are equal. However, like the last plot, this range of values occured over a very small range of potentiometer values as a smaller R_B allows a larger I_B to pass.
+* Challenge 3-5
+In this challenge, a 100k\Omega resistor was now used for R_C and the resulting load line was plotted.
+#+ATTR_LATEX: :width 300px
+file:image7.jpg
+This plot may look messy, but a general shape resembling that of the earlier plots can be seen. by increasing R_C by a factor of 100, the current and power have also reduced by a factor of 100. The plot's messy appearance is due to this current being so low and only being measured to roughly the nearest 0.01mA, causing a much larger % error in the readings.
+* Activity 6 / Challenge 3-6
+This activity was simply a discussion about how a transistor circuit can be designed to act very similar to a pushbutton switch circuit such as those used in earlier labs. In the common-emitter configuration, a transistor acts like a pushbutton switch with a pull-up resistor, and in common-collector configuration it acts like a pushbutton switch with pull-down resistor. \newline\newline The base current in a common collector configuration can be calculated by
+\[I_B =\frac{V_I - 0.7V}{h_{FE}R_E+R_B}\]
+If R_E was decreased to 100\Omega with a V_in of 5V and R_B of 47k\Omega the base current, assuming h_{FE}=100 would be \(I_B=\frac{5V-0.7V}{(100)(100)+47k\Omega}=0.075mA\). The collector current, I_C can be calculated by \[I_C = I_Bh_{FE}\]Hence, for our circuit \(I_C = (100)(0.075mA) = 7.5mA\). Finally, the saturation current in the common collector configuration is calculated by \[I_{SAT}=\frac{V_{dd}-0.3}{R_E}\]. So again for our circuit, \(I_{SAT} = \frac{5V-0.3V}{100} = 4.7mA\). Since I_C is well above the saturation current, I_C, saturation can easily be reached with this configuration.

@@ -1,0 +1,24 @@
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Changes to be committed:
+#	new file:   #index.html#
+#	modified:   css/style.css
+#	new file:   fonts/League_Gothic.woff
+#	new file:   fonts/leaguegothic-regular-webfont-webfont.woff
+#	new file:   fonts/leaguegothic-regular-webfont-webfont.woff2
+#	deleted:    fonts/leaguegothic-regular-webfont.eot
+#	deleted:    fonts/leaguegothic-regular-webfont.svg
+#	deleted:    fonts/leaguegothic-regular-webfont.ttf
+#	deleted:    fonts/leaguegothic-regular-webfont.woff
+#	new file:   images/build.jpg
+#	new file:   images/educate.jpg
+#	new file:   images/educate2.jpg
+#	new file:   images/kiosk.jpg
+#	new file:   images/main_logo3.png
+#	modified:   index.html
+#
+# Untracked files:
+#	.#index.html
+#

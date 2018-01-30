@@ -46,11 +46,18 @@
 ;; === Programming & Coding Functions ===
 (load-file "~/.emacs.d/config/init-coding-gen.el")
 
+;; === Web Editing ===
+(load-file "~/.emacs.d/config/init-coding-web.el")
+
+;; === C/C++/Arduino Editing ===
+(load-file "~/.emacs.d/config/init-coding-c.el")
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(flycheck-c/c++-clang-executable "clang-3.5")
  '(package-archives
    (quote
     (("gnu" . "http://elpa.gnu.org/packages/")
@@ -60,6 +67,6 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(web-mode-html-tag-bracket-face ((t (:foreground "brightblue")))))
 ;;; init.el ends here
 

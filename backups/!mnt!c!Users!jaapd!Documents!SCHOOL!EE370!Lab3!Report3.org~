@@ -1,0 +1,205 @@
+#+TITLE:EE370 Lab 3
+#+SUBTITLE: Instructior: Paula Quintana
+#+AUTHOR: Jaap de Dood
+#+DATE: September 19 2017
+#+OPTIONS: toc:nil
+#+LaTeX_HEADER:\usepackage[margin=1.0in]{geometry}
+* Chapter 2
+** Activity 1
+In this Lab, the StampPlot Pro V3 software and its functionalities were explored using pre-built macros by Parallax. For the first activity we used a program from an earlier lab, LightAlarmsWithSubroutines.bs2 and the same circuits from this lab as shown.
+#+ATTR_LATEX: :width 400px
+file:image1.jpg
+With the LightAlarmsWithSubroutines.bs2 running on the board the sic-pc-light-level macro which was downloaded earlier was ran. This opens the StampPlot software which can connect to the board and plot the measurements from the photoresistor and RCTTIME function. By varying the light level on the photoresistor for a few seconds the following graph was produced.
+#+ATTR_LATEX: :width 400px
+file:image2.jpg
+The green and blue lines represt the max and min light levels indicated in the code by the lines:\newline
+PhotoMin = 7 ' Set minimum light value\newline
+PhotoMax = 20 ' Set maximum light value\newline
+and the black line is plotting the light level measured by the photoresistor.
+** Challenge 2-1
+The objective of this challenge was to include a plot for the value of the push button. To do this, specially formatted debug instructions have to be sent to the console to include extra information on the StampPlot graph.\newline\newline
+Knowing this, the follow code was made:
+#+BEGIN_EXAMPLE
+' -----[ Title ]-----------------------------------------------------------
+' Process Control - Challenge2-1
+' Sounds alarm based on photoresistor readings
+' {$STAMP BS2}
+' {$PBASIC 2.5}
+' -----[ Declarations ]----------------------------------------------------
+Photo PIN 0 ' Alias for photo resistor circuit on P0
+LED PIN 5 ' Alias for LED on P5
+Buzzer PIN 10 ' Alias for buzzer on P10
+PB PIN 13 'Alias for Push button on P13
+PhotoVal VAR Word ' Variable to hold RC Time value
+PhotoMin VAR Word ' Holds minimum light level value
+PhotoMax VAR Word ' Hold maximum light level value
+' ---[ Initialization ] ------------------------------------------------------
+PhotoMin = 7 ' Set minimum light value
+PhotoMax = 20 ' Set maximum light value
+PAUSE 1000 ' Allow connection to stabilize -- for Chapter 2
+DEBUG CR, "!SPAN 0,2000", CR ' Sets Y-axis range
+' -----[ Main Routine ]----------------------------------------------------
+DO
+ GOSUB DisplayPB
+ GOSUB ReadPhoto
+ GOSUB CheckLightHigh
+ GOSUB CheckLightLow
+ PAUSE 500
+LOOP
+' -----[ Subroutines ]-----------------------------------------------------
+ReadPhoto: ' Read light level and plot values
+ HIGH Photo
+ PAUSE 10
+ RCTIME Photo,1,PhotoVal
+ DEBUG DEC PhotoVal, ",", DEC PhotoMin, "," ,DEC PhotoMax,CR
+RETURN
+CheckLightHigh: ' Test if high light level
+ IF (PhotoVal < PhotoMin) THEN
+ DEBUG "LIGHT LEVEL HIGH!",CR
+ FREQOUT Buzzer,100,3000
+ PAUSE 100
+ ENDIF
+RETURN
+CheckLightLow: ' Test if low light level
+ IF (PhotoVal > PhotoMax) THEN
+ DEBUG "LIGHT LEVEL LOW!",CR
+  FREQOUT Buzzer,200,1000
+ PAUSE 200
+ ENDIF
+RETURN
+DisplayPB:
+ DEBUG IBIN PB, CR ' Plot pushbutton as digital
+ RETURN
+#+END_EXAMPLE
+When the sic-pc-light-level macro was ran the following graph was produced by varying the light level and pushing the button randomly.
+file:image3.jpg
+As you can see, the value of the pushbutton is now shown on the graph as a blue line. The graph is not very legible, however, since the light level values range between 0 and ~100 and the line:\newline
+DEBUG CR, "!SPAN 0,2000", CR ' Sets Y-axis range\newline
+sets the y-axis range to 0-2000, which is far too large for the values we are attempting to present.
+** Activity 2
+In Activity 2 it was discovered that the StampPlot software can not only receive data from the BASIC Stamp, but can also communicate with it. For example, in this lab the code from the LightAlarmsWithSubroutines program was edited to allow the BASIC Stamp to read the minimum and maximum alarm values from the StampPlot software while running the program. This was achieved as follows:
+#+BEGIN_EXAMPLE
+' -----[ Declarations ]----------------------------------------------------
+Photo PIN 0 ' Alias for photo resistor circuit on P0
+LED PIN 5 ' Alias for LED on P5
+Buzzer PIN 10 ' Alias for buzzer on P10
+PhotoVal VAR Word ' Variable to hold RC Time value
+PhotoMin VAR Word ' Holds minimum light level value
+PhotoMax VAR Word ' Hold maximum light level value
+' ---[ Initialization ] ------------------------------------------------------
+PhotoMin = 7 ' Set minimum light value
+PhotoMax = 20 ' Set maximum light value
+PAUSE 3000 ' Allow connection to stabilize -- for Chapter 2
+' -----[ Main Routine ]----------------------------------------------------
+DO
+ GOSUB ReadStampPlot
+ GOSUB ReadPhoto
+ GOSUB CheckLightHigh
+ GOSUB CheckLightLow
+ PAUSE 500
+LOOP
+' -----[ Subroutines ]-----------------------------------------------------
+ReadPhoto: ' Read light level and plot values
+ HIGH Photo
+ PAUSE 10
+ RCTIME Photo,1,PhotoVal
+ DEBUG DEC PhotoVal, ",", DEC PhotoMin, "," ,DEC PhotoMax,CR
+RETURN
+CheckLightHigh: ' Test if high light level
+ IF (PhotoVal < PhotoMin) THEN
+ DEBUG "LIGHT LEVEL HIGH!",CR
+ FREQOUT Buzzer,100,3000
+ PAUSE 100
+ ENDIF
+RETURN
+CheckLightLow: ' Test if low light level
+ IF (PhotoVal > PhotoMax) THEN
+ DEBUG "LIGHT LEVEL LOW!",CR
+  FREQOUT Buzzer,200,1000
+ PAUSE 200
+ ENDIF
+RETURN
+ReadStampPlot: ' Update values from StampPlot
+ DEBUG "!READ (txtMinA)", CR ' Read value of Min Alarm text
+ SERIN 16, 84, 200, TimeOut1, [DEC PhotoMin]
+ TimeOut1:
+ PAUSE 50 ' Allow echo to clear from BS2
+ DEBUG "!READ (txtMaxA)", CR ' Read value of Max Alarm text
+ SERIN 16, 84, 200, TimeOut2, [DEC PhotoMax]
+ TimeOut2:
+ PAUSE 50 ' Allow echo to clear from BS2
+RETURN
+#+END_EXAMPLE
+The !READ instruction in those code is what allows the BASIC Stamp to receive the values of txtMinA and txtMaxA from StampPlot. The next line, SERIN 16, 84, 200, TimeOut1, [DEC PhotoMin], stores this value as a variable named PhotoMin as a decimal.\newline\newline
+Initially, DEBUGIN DEC PhotoMin was used instead of the SERIN line to store the values, however, this caused the program to hang when downloaded to the board. To fix this the SERIN instruction was used instead, which also offers more flexibility using timeouts.
+* Chapter 3
+** Activity 1
+In this activity, the following circuit was constructed:
+#+ATTR_LATEX: :width 200px
+file:image4.jpg
+And the following code was uploaded to the board:
+#+BEGIN_EXAMPLE
+' -----[ Title ]-----------------------------------------------------------
+' Process Control - DataMonitoring.bs2
+' Monitors and Plots Analog and Digital Data
+' {$STAMP BS2}
+' {$PBASIC 2.5}
+' -----[ Declarations ]----------------------------------------------------
+DigDataIn VAR Bit ' Digital input data
+ADC_DataIn VAR Byte ' Analog to Digital Converter data
+LED PIN 0 ' LED output pin
+DigIn PIN 8 ' Digital input pin monitored
+ADC_CS PIN 13 ' ADC Chip Select pin
+ADC_Clk PIN 14 ' ADC Clock pin
+ADC_Dout PIN 15 ' ADC Data output
+' -----[ Initialize ] -----------------------------------------------------
+OUTPUT LED ' Set LED as output
+PAUSE 1000 ' Allow connection to stabilize
+' -----[ Main Routine ]----------------------------------------------------
+DO
+ GOSUB ReadData
+ LED = DigIn
+ GOSUB PlotData
+ PAUSE 500
+LOOP
+' -----[ Subroutines ]-----------------------------------------------------
+ReadData: ' Read ADC 0831
+ LOW ADC_CS ' Enable chip
+ DigDataIn = DigIn ' Read digital input value to coincide with ADC read
+ SHIFTIN ADC_Dout, ADC_Clk, MSBPOST,[ADC_DataIn\9] ' Clock in data from ADC
+ HIGH ADC_CS ' Disable ADC
+RETURN
+PlotData: ' Send data to StampPlot
+ DEBUG IBIN DigDataIn,CR ' Plot indicated binary value
+ DEBUG "[", ' Bracket for StampPlot math operation
+ DEC ADC_DataIn, ' Analog data
+ ",*,.0196]",CR ' Convert ADC value to voltage by StampPlot
+RETURN
+#+END_EXAMPLE
+In the circuit, a potentiometer is connected across Vdd (5V line) and Vss (gound) with pin 8 and the input voltage of an analog-to-digital converter connected to the middle pin of the potentiometer. What this does is create a voltage divider circuit, varying the voltage to the ADC from 5V to 0V. As the ADC V_in pin is connected to the middle input of the potentiometer, when the potentiometer is turned all the way to 10K\Omega the resistance between 5V and the pin will be 10K\Omega and the resistance between the pin and ground will be almost 0\Omega. As a result, the pin will see 0V, or digital LOW. When the potentiometer is turned all the way in the other direction, all the voltage will be dropped between the pin and ground, hence the pin will see 5V or digital HIGH. \newline\newline
+To find out at what voltage the ADC switches from HIGH to LOW the potentiometer was slowly turned to vary the voltage across the pin and the output was plotted using StampPlot.
+#+ATTR_LATEX: :width 400px
+file:image5.jpg
+It can be seen on the graph that the output level from the ADC switches from HIGH to LOW at around 1.4V. This is considered the threshold voltage.
+** Activity 2
+In this activity, a photoresistor was added to the circuit from activity 1 as follows:
+#+ATTR_LATEX: :width 150px
+file:image6.jpg
+With this photoresistor in place, the voltage divider from activity 1 is altered by the amount of light falling on the photoresistor. The potentiometer was adjusted to around 8k\Omega so that the pin connected to V_in on the ADC is seeing about 1V at daylight. When the light on the photoresistor is reduced, the voltage seen by the ADC is increased, hence when the light drops below a certain level the LED turns on as if it is a night light. This result can be seen in StampPlot:
+file:image8.jpg
+** Challenge 3-2
+In this challenge the circuit from activity 2 was changed for the LED to light up at bright light instead of darkness. With the circuit from Activity 2 set up, this is a simple job as the polarity of the voltage source just had to be reversed. The results can be seen in StampPlot:
+#+ATTR_LATEX: :width 150px
+file:image7.jpg
+When the light level is high, the voltage is high and the LED is on. When the voltage drops below the threshold voltage, the ADC outputs logic LOW and the LED turns off.
+* Activity 3
+In this activity, the potentiometer/photoresistor for activity 1 and 2 were swapped out for a push button. When the program was ran and connected to StampPlot the following plot was produced by pressing the push button sporadically:
+#+ATTR_LATEX: :width 150px
+file:image9.jpg
+The black line is the analog input to the ADC and the blue line is the analog output. It can be seen how the digital signal output by the ADC is discretely a HIGH or LOW value with steep edges whereas the analog value is a continuous signal that can vary between 0-5V.\newline\newline
+In the circuit for this lab, the normally-open (N.O.) pushbutton is an open-circuit and hence the input to the push button, P8, is left floating. The possible dangers of this can be seen by touching the lead to the input with a bare hand and generating some static electricity. In the graph below the push button was pressed once, and then the lead was touched and one foot rubbed on the floor. 
+#+ATTR_LATEX: :width 150px
+file:image10.jpg
+As you can see, the voltage spikes were large enough to cause a digital output on the ADC. This could possibly cause large issues when such a circuit is used in practice.\newline\newline
+This issue can be mostly resolved by 
+ 

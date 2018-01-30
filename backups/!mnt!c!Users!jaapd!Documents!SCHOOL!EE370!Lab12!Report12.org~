@@ -1,0 +1,59 @@
+#+TITLE: EE370 Lab12
+#+SUBTITLE: Instructor: Paula Quintana
+#+AUTHOR: Jaap de Dood
+#+DATE: November 20 2017
+#+OPTIONS: toc:nil
+#+LaTeX_HEADER: \usepackage[margin=1.01in]{geometry}
+* Activity 3
+In this activity, the same circuit and code as the previous lab were used but this time the effects of altering the gain constants were observed.
+file:image1.jpg
+Kp, the gain of the proportional band was changed from 1 to 0.5, 1.0, 2.0 and on the last run 0.1 with the band at 5. There is some substantial noise in the circuit when the fan is turned on. This should be ignored. There is no overshoot in this response but diffirence in output drives can be seen in the graphs in blue. As the Kp was increased each time, the output remained at 100\% for a longer time. At a Kp of 0.1 the output never even reached 100\% but stayed at approximately 60\% for the duration of the plot. In fact, the temperature never reached the setpoint in almost 10 minutes time, although approaching it asymptotically. This means a Kp of 0.1 is creates a very overdamped system. As none of the responses caused any overshoot anyway, the system with a kp = 2.0 produced the best response as it approached the setpoint fastest.
+** If the error is negative, will this reduce or increase the total drive controlling the system?
+If the error is negative, this means the measured value is above the setpoint thus the drive will be reduced to decrease the measurement.
+** What is the “Band of Temperature Control” and how does this value affect the “proportional drive” applied to the system? To do this you can compare a Band Temperature of 1F and a Band of 2F. If the error is 0.3F, what’s the percentage of proportional drive applied in both cases(Assuming Kp=1)?
+
+* Challenge 8-3
+#+ATTR_LATEX: :width 200px
+file:image2.jpg
+Proportional Gain = 1/200\(\%\) = 0.5\newline\newline
+Output at: 111F = 37.5\(\%\), 106F = 100\(\%\), 115F = 0\(\%\).
+* Activity 4
+In this activity, the setpoint was set a further distance away from the stable 50% bias temperature. Now, with a Kp of 0.1, the temperature stabilized around 100 F, which is a significant steady state error from the setpoint ot 105 F. By increasing the proportional gain, Kp, the drive proportional to the error was increased and so a temperature closer to the setpoint was achieved.
+#+ATTR_LATEX: :width 200px
+file:image3.jpg
+Even at kp = 2.0, with a fully charged battery, there was no oscillation so 2.0 would be the best value for Kp. The bias drive cannot be adjusted manually like this to account for large errors. This is why proportional drive alone is not enough to keep the system at a stable temperature regardless of the conditions.
+* Challenge 8-4
+1. Below the setpoint. 50% is not enough to drive the flow to the setpoint.
+2. Increasing the proportional gain will increase the steady state flow rate but an excessive gain will cause oscillation.
+3. Decreasing the proportional gain will decrease the drive and cause larger error.
+* Activity 5
+In this activity, using integral drive to correct for long-lasting errors was investigated. 
+#+ATTR_LATEX: :width 400px
+file:image4.jpg
+The blue output graphs shows how the integral was being calculated correctly as the integral gain, Ki, was increased, but the temperature graph does not look exactly as expected. This is because the integral drive quickly reaches 100% and cannot exceed this, so the temperature only increases faster with a higher gain for a few seconds as the integral drive reaches 100% but is the same after that. Nonetheless, it can be seen that the integral increases at a much higher rate when the gain is increased so the system would behave as expected with a higher drive capacity.
+* Challenge 8-5
+#+ATTR_LATEX: :width 400px
+file:image5.jpg
+In this plot, only integral control was used. As can be seen, this works but is not very effectevie as there is huge over and undershoot. This is because the integral value stays positive or negative for a long time after passing the setpoint before it turns the opposite direction. This causes oscillation.
+* Activity 6
+In this activity, the derivative component of PID control was investigated. The following plot was produced by increasing the derivative gain constant, Kd, from 0 to 1, 10 and 50 and introducing disturbances to the system.
+#+ATTR_LATEX: :width 400px
+file:image6.jpg
+It is not that clear to see in the plot, partially because the setpoint was set a little too high, but with only proportional control there is some oscillation in the temperature after it reaches the setpoint. With the derivative gain increased, this oscillation is reduced as changes in temperature are resisted. At Kd = 50, this is excessive and the temperature oscillates without even reaching the setpoint.
+* Challenge 8-6
+In this challenge, it was tested whether a system could be controlled using only derivative control.
+#+ATTR_LATEX: :width 400px
+file:image7.jpg
+The plot shows the answer is clearly no. As the temperature slowly decreased the derivative drive was not sufficient to compensate for the energy loss. Even with a higher derivative gain, if the temperature is not the setpoint, it will remain the same as long as there is no change in temperature.
+* Final Lab
+In this lab, a PID system was tuned to provide the best responses for different requirements. First, a setpoint of 101.5 F +/- 1 F with a bias of 50% and drive time of 2 seconds was used and the system was tuned until the fastest response with minimal error was seen. The following plots are a recording of the process.
+#+ATTR_LATEX: :width 400px
+file:image7b.jpg
+#+ATTR_LATEX: :width 400px
+file:image8.jpg
+#+ATTR_LATEX: :width 200px
+file:image9.jpg
+The last plot shows the system responding to a heavy disurbance by a fan. The temperature quickly returns to the setpoint with no overshoot. \newline\newline
+The same process was repeated with a setpoint of 100F +/- 2F with a 50% bias and drive time of 1 second.
+#+ATTR_LATEX: :width 400px
+file:image10.jpg

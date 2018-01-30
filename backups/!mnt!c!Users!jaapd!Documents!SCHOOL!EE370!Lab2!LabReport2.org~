@@ -1,0 +1,22 @@
+#+TITLE: EE370 Lab1A
+#+SUBTITLE: Instructor: Paula Quintana
+#+AUTHOR: Jaap de Dood
+#+DATE:August 30 2017
+#+OPTIONS: toc:nil
+#+LaTeX_HEADER:\usepackage[margin=1.0in]{geometry}
+* Challenge 1-1
+** Cooking chicken in the oven flowchart
+1. Turn on oven
+2. Season Chicken
+3. Wait 10 minutes
+4. Oven thermometer reads 400 degrees
+   + True - go to step 5
+   + False - go back to step 3
+5. Put chicken in oven
+6. Wait 40 minutes
+7. Chicken looks crispy
+   + True - Take out chicken
+   + False - wait 5 minutes
+     - go back to step 7
+
+file:image1.jpg

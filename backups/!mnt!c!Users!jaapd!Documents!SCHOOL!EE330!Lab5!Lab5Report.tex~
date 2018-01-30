@@ -1,0 +1,125 @@
+% Created 2017-11-17 Fri 01:01
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage[margin=1.0in]{geometry}
+\author{Jaap de Dood}
+\date{Nov. 15, 2017}
+\title{EE330 Lab \#4\\\medskip
+\large Bipolar Junction Transistors Applications}
+\hypersetup{
+ pdfauthor={Jaap de Dood},
+ pdftitle={EE330 Lab \#4},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 24.5.1 (Org mode 9.0.7)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\section{Abstract}
+\label{sec:org556607a}
+In this lab, applications of using a Bipolar Junction Transistor (BJT) in an unstabilized and stabilized common emitter configuration with, without and with partial degeneration were investigated. Each amplifier circuit was designed, debugged, and the values for R\(_{\text{i}}\), R\(_{\text{o}}\) and A\(_{\text{v}}\) were measured. The effects of temperature and varying input loads were observed and potential improvements to the design attempted. The unstabilized design required the least components and was easy to design but the output varied greatly with temperature; from 80 at -51C to 187 at 25C. The stabilized common emitter configuration without degeneration had a lower gain of 170 (using a higher \(\beta\) transistor) but the gain only varied by 25 from -55 C to 125 C. The stabilized design with degeneration had an even lower gain of 10, but this did not vary at all with temperature.
+\section{Introduction}
+\label{sec:org2d5a1d9}
+The following unstabilized common emitter amplifier was designed for a DC operating point of about 1mA using a BC547 BJT.
+\begin{center}
+\includegraphics[width=200px]{image1.jpg}
+\end{center}
+The resistor values were decided by deciding to allocate about 6V to V\(_{\text{Rc}}\) and 4V to V\(_{\text{CE}}\). At an I\(_{\text{C}}\) of 1mA, this would require a 6K resistor. This is not a common resistor value, so a 5.1k was used instead. Next, knowing that 
+\[I_C = \beta I_B\]
+we know that at a \(\beta\) of roughly 400, 
+\[I_B = \frac{1mA}{400} = 2.5\mu A\]
+In the circuit shown,
+\[I_B = \frac{V_{CC}-V_{BE}}{R_B} = \frac{10-0.6}{R_B} = 2.5\mu A\]
+\[\implies R_B \approx 4M\]
+(3M\(\Omega\) was used - see discussion). Our expected gain for this configuration, can be derived from the small-signal model of the circuit:
+\begin{center}
+\includegraphics[width=200px]{image2.jpg}
+\end{center}
+\[-\frac{v_{out}}{R_C} = g_m v_{\pi} \implies -\frac{V_o}{V_{in}} = A_V = -g_m R_C = -\frac{V_{R_C}}{V_T} = \frac{1.2mA \cdot 5.1k}{0.026} = 235\]
+Likewise, the input and output resistances can be estimated.
+\[R_{in} = r_{\pi} || R_B \approx r_{\pi} = \frac{\beta _0 V_T}{I_C} = 10.4K\Omega\]
+\[R_{out} = R_c || R_0 \approx R_C = 5.1K\Omega\]
+When an input voltage is applied to the amplifier, some voltage is lost in the coupling of the input source to the amplifier. This is described by the equation:
+\[V_B=V_{in}\frac{R_{in}}{R_{in}+R_s}\]
+It can be seen from this equation that R\(_{\text{in}}\) should be maximized in order to minimize any loss. Likewise, there is some voltage loss in the output coupling described by:
+\[V_L=V_o\frac{R_L}{R_L + R_o}\]
+Hence, the output resistance should be minimized for good coupling.\newline\newline
+A capacitor at the input is also required to prevent any DC offset from interfering with the signal. The value of this capacitor is chosen by ensuring that the reactance does not significantly alter the input resistance at the lowest frequency the system my operate at. By letting X\(_{\text{Cin}}\) be a 10th of the input resistance and assuming we don't need to operate below 100Hz:
+\[X_{Cin}=\frac{1}{2\pi \cdot 100 C}=10K \implies C = 0.16\mu F\]
+So anything above 0.1\(\mu\) F will work. 1\(\mu\) F was used.\newline\newline
+Next, a stabilized common emitter amplifier without degeneration was designed using a 2N5089. The required specifications were an operating point of about 2mA and V\(_{\text{CC}}\) = 10V.
+\begin{center}
+\includegraphics[width=200px]{image3.jpg}
+\end{center}
+Designing this circuit was done by assigning 5V to the collector resistor, 3V to V\(_{\text{CE}}\) and 2V to the emitter resistor. With I\(_{\text{C}}\) = 2mA, this means
+\[R_C = \frac{5V}{2mA} = 2.5K\Omega, R_E = \frac{2V}{2mA} = 1k\]
+2.5k\(\Omega\) is not a common resistor value so 2.2k was used for R\(_{\text{C}}\). As a good rule of thumb, the bias current used is I\(_{\text{C}}\)/10, so 0.2mA. Knowing that V\(_{\text{Rc}}\) = 2V, V\(_{\text{BE}}\) = 2.6V and hence
+\[R_2 = \frac{2.6V}{0.2mA} = 13K, R_1 = \frac{10-2.6V}{0.2mA} = 48.7k\]
+Again, as these are not common resistor values, a 47k for R\(_{\text{1}}\) and 20k for R\(_{\text{2}}\) were used. For the bypass capacitor across R\(_{\text{E}}\), the reactance should be less than R\(_{\text{E}}\)/\(\beta\) at the lowest frequency operated in order not to add any significant AC resistance to the emitter.
+\[X_{Ce} = \frac{1}{2\pi \cdot 100 C} = \frac{R_E}{400} = 636\mu F\]
+A 2000\(\mu\) F capacitor was used. The same rules apply for the input capacitor as in the previous design.\newline\newline
+By the same process, a stabilized common emitter amplifier with emitter degeneration was designed. The only difference being that this time, the emitter resistor value is split into two resistors, bypassing only one resistor. This allows us to have a small emitter resistor that is not bypassed while having a large enough DC voltage drop across the B-E junction to forward bias it. The non-bypassed resistor, R\(_{\text{E1}}\), is desired to be a small value as the gain of this configuration is defined as:
+\[A_v = \frac{R_C}{R_{E1}}\]
+So a smaller value of R\(_{\text{E1}}\) will produce a larger voltage gain. The required specifications were I\(_{\text{C}}\) = 0.25mA, V\(_{\text{CC}}\) = 12V and AV \(\approx\) 10. The following amplifier was designed using a 2N3904.
+\begin{center}
+\includegraphics[width=200px]{image4.jpg}
+\end{center}
+Using the voltage gain equation for this configuration specified above, the gain should now be quite close to 10. Adding the emitter resistor also increases the input resistance to:
+\[r_{in} = r_{\pi} + (\beta +1)R_E = 35.4K + 602k = 637.5K\]
+However, this resistance is in parallel with R\(_{\text{1}}\) and R\(_{\text{2}}\), so the actual input resistance is:
+\[637.5K || 320K || 151K = 88.4K\]
+The output resistance is still approximately R\(_{\text{C}}\), hence 20K.
+\section{Procedure}
+\label{sec:org2f347b8}
+To measure the input and output resistances, the half deflection method was used. This is done by connecting one channel of the oscilloscope to the input at the base of the transistor, the other across the output at the collector resistor and adding a potentiometer at either the input or the output for finding the input abbbbnd output resistances respectively. \newline\newline
+With the potentiometer turned down to have almost no resistance at all, the input and output waveforms will be seen as expected, from which the amplifier gain can be calculated by Vout/Vin. Then, the potentiometer is turned until the output voltage is exactly halved. At this point the pontentiometer is forming a voltage divider with the input resistance that is dividing the voltage by 2, hence the resistance values are equal. The potentiometer can then be removed from the circuit and its resistance measured to find the input or output resistance.
+\section{Results}
+\label{sec:orgd6c96c9}
+\subsection{Unstabilized common emitter}
+\label{sec:org1fa388e}
+\begin{center}
+\begin{tabular}{rllr}
+A\(_{\text{V}}\) & R\(_{\text{in}}\) & R\(_{\text{out}}\) & A\(_{\text{V}}\) at -51 C\\
+\hline
+187 & 9.0k & 4.3k & 80\\
+\end{tabular}
+\end{center}
+\subsection{Stabilized common emitter}
+\label{sec:org676e7a7}
+\begin{center}
+\begin{tabular}{rllrr}
+A\(_{\text{V}}\) & R\(_{\text{in}}\) & R\(_{\text{out}}\) & A\(_{\text{V}}\) at -51 C & A\(_{\text{V}}\) at 125 C\\
+\hline
+169 & 4.1k & 2.3k & 175 & 150\\
+\end{tabular}
+\end{center}
+\subsection{Stabilized common emitter with degeneration}
+\label{sec:orgab62331}
+\begin{center}
+\begin{tabular}{rllrr}
+A\(_{\text{V}}\) & R\(_{\text{in}}\) & R\(_{\text{out}}\) & A\(_{\text{V}}\) at -51 C & A\(_{\text{V}}\) at 125 C\\
+\hline
+9.8 & 98k & 29.9k & 9.8 & 9.8\\
+\end{tabular}
+\end{center}
+\section{Discussion}
+\label{sec:org4263f5d}
+\subsection{Unstabilized common emitter}
+\label{sec:org4c61004}
+Initially, a 4M\(\Omega\) resistor was used for R\(_{\text{B}}\), however, this was found to produce an I\(_{\text{C}}\) far below 1mA, so it was exchanged for a 3M\(\Omega\) resistor. This was probably because the actual \(\beta\) of the transistor was below our estimated value of 400. Now, I\(_{\text{C}}\) was measured to be 1.2mA. Similarly, this explains the discrepancy between the calculated and the mesaured value of the input resistance. Cooling the device using a cooling spray reduced the gain of this configuration to 80 from 187. V\(_{\text{T}}\) is reduced with temperature so looking at the equation for A\(_{\text{V}}\) you might expect the gain to increase, however, in this unstabilized configuration, I\(_{\text{C}}\) is highly dependent on \(\beta\), which is highly dependent on temperature. Cooling the device greatly reduces \(\beta\) and hence I\(_{\text{C}}\) and V\(_{\text{Rc}}\), which explains the reduction in gain.\newline\newline
+Knowing these relationships, we can also say that we could increase the gain of this amplifier by either using a transistor with a higher \(\beta\) value or keeping the device at a higher temperature. 
+\end{document}

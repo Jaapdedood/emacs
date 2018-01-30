@@ -1,0 +1,104 @@
+#+TITLE: EE370 Lab 10
+#+SUBTITLE: Instructor: Paula Quintana
+#+AUTHOR: Jaap de Dood
+#+DATE: November 11th 2017
+#+OPTIONS: toc:nil
+#+LaTeX_HEADER: \usepackage[margin=1.01in]{geometry}
+* Finding and simulating the Transfer function
+Initially for this lab, the transfer function found in the previous lab was used. This was calculated as follows:
+#+LaTeX_HEADER: \usepackage{amsmath}
+\begin{gather*}
+\text{OS}\% \approx \frac{107-101.5}{107} = 5\%,\\
+\\
+\text{OS}\% = 100 \cdot e^{(\frac{-\zeta \pi}{\sqrt{1 - \zeta ^2}})},\\
+\\
+\implies 0.05 = 100 \cdot e^{(\frac{-\zeta \pi}{\sqrt{1 - \zeta ^2}})},\\
+\\
+\frac{-\zeta \pi}{\sqrt{1 - \zeta ^2}} = ln(\frac{0.05}{100}) = -7.6,\\
+\\
+\implies \zeta \pi = 7.6\sqrt{1-\zeta ^2},\\
+\\
+\implies 57.76\zeta ^2 + 9.87\zeta ^2 = 57.76,\\
+\\
+\implies \zeta = \sqrt{\frac{57.76}{67.63}} = 0.92
+\end{gather*}
+peak time \approx 62s
+\begin{gather*}
+T_p = \frac{\pi}{\omega _n \sqrt{1-\zeta ^2}},\\
+\\
+\implies 62 = \frac{\pi}{\omega _n \sqrt{1-0.92 ^2}},\\
+\\
+\implies \omega _n = \frac{\pi}{62 \sqrt{1-0.92 ^2}} = 0.13 \text{rad}\\
+\end{gather*}
+Final value = 101.5
+\begin{gather*}
+T(s) = \frac{K \omega _n ^2}{s^2 + 2\zeta \omega _n s + \omega _n ^2}\\
+\\
+= \frac{1.72}{s^2 + 0.24s + 0.017}
+\end{gather*}
+However, when the step response of this function was plotted in MATLAB using the step() function, the following plot was seen.
+#+ATTR_LATEX: :width 300px
+file:image1.jpg
+This step response seemed far too overdamped compared to the results seen in lab, so the calculations had to be checked. After a long search, it was discovered that the value used for "\(OS\%\)" did not have to be converted to a decimal as the equation already multiplies by a factor of 100 on the right side. With this correction, the new values and transfer function calculated were:
+\begin{gather*}
+\zeta = 0.69\\
+\\
+w_n = 0.07\\
+\\
+\implies T(s) = \frac{0.498}{s^2 + 0.097s + 0.0049}
+\end{gather*}
+Which produced the following graph.
+#+ATTR_LATEX: :width 300px
+file:image2.jpg
+This looks a lot more like the response seen in lab.\newline\newline
+The time domain step response was then also found and plotted using the relationship:
+\[Y(s) = G(s)*X(s)\]
+and the Matlab functions "ilaplace()" and "ezplot()". This produced the following graph.
+#+ATTR_LATEX: :width 300px
+file:image3.jpg
+Which is clearly the same response as seen before using the "step()" function. Compared to the response seen in lab, overshoot% and peak times are identical. The only difference is the behaviour after the initial peak, as the heater cycled on and off in the lab to maintain temperature, causing constant ripple after the initial peak. The plot of the transfer function assumes the input energy of the heater will match environment heat loss and the temperature reaches a stable 101.5 F.\newline\newline
+Using the "damp()" function on our defined transfer function produced the following output:
+#+ATTR_LATEX: :width 300px
+file:image4.jpg
+The function simply calculates the natural frequencies, damping ratios, time constants, and poles of the transfer function. In this case the frequency \omega_n and damping coefficient \zeta calculated earlier are displayed. The denominator has also been solved for s to find the poles of the transfer function and the time constant is calculated by \(\tau = \frac{1}{\omega _n \zeta}\). The damping coefficient, \zeta, calulated is < 1 hence the system is underdamped. This explains the overshoot and undershoot as the system approaches its rest position. The full MATLAB code used is included.
+#+BEGIN_EXAMPLE
+% TF variables
+clear,clc
+K = 101.5;
+zeta = 0.69;
+w0 = 0.07;
+
+%% Using tf
+G1 = tf(K*w0^2, [1,2*zeta*w0,w0^2]);
+step(G1);
+
+%% using zpk
+numerator = K*w0^2;
+zeros = roots(numerator);
+denom = [1 2*zeta*w0 w0^2];
+poles = roots(denom);
+G2 = zpk(zeros, poles, numerator);
+step(G2);
+
+%% using syms
+syms s t
+G3 = (K*w0^2)/(s^2+2*zeta*w0*s+w0^2);
+%step(G3(s)) - does not work
+
+%% Finding the step response
+X = 1/s; %Step function input
+Y = G3*X; %Response
+y(t) = ilaplace(Y) %Time domain step response
+ezplot(y(t), [0, 140, 0, 120]);
+
+%% Second Order Transfer Functions
+damp(G2)
+#+END_EXAMPLE
+* Simulink models
+In this part of the lab, the system was modeled using Simulink. First, the on/off control method was modeled using the following simulink model
+#+ATTR_LATEX: :width 300px
+file:image6.jpg
+The "MATLAB Function" inserted into the model is a simple script which simulates turning on the heater below 101.5F and off above the same temperature. This is analogous to the BASIC Stamp code uploaded to the controller used in lab. The following output was produced.
+#+ATTR_LATEX: :width 300px
+file:image5.jpg
+This looks a little like the plot produced in lab except with a much larger undershoot every time the timer is turned off. 

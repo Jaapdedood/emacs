@@ -1,0 +1,66 @@
+% Created 2017-09-06 Wed 22:59
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage[margin=1.0in]{geometry}
+\author{Jaap de Dood}
+\date{August 30 2017}
+\title{EE370 Lab1A\\\medskip
+\large Instructor: Paula Quintana}
+\hypersetup{
+ pdfauthor={Jaap de Dood},
+ pdftitle={EE370 Lab1A},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 24.5.1 (Org mode 9.0.7)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\section{Introduction}
+\label{sec:org379af03}
+\subsection{The board}
+\label{sec:org9be59e3}
+In this lab the functions, capabilities and usage of the BASIC stamp 2 (BS2) board were explored. The BS2 is a microcontroller module manufactured by Parallax Inc. that uses a PIC16C57c chip by Microchip Technology and, by default, is programmed using the PBASIC language.\newline
+For these labs a development board for the BS2 is used. This board contains a 9V battery connection with corresponding voltage regulation circuit for powering the board and an RS-232 connector for serial communication between the board and a computer.\newline
+For delivering power to the board I decided to convert a 9V power supply by soldering a 9V battery connector to the outputs rather than burning through countless batteries throughout the lab.\newline
+Another important fact to remember is that the output current from BS2 pins should be limited to 20mA which is why usually a 220\(\Omega\) resistor is required to limit the current flow. The homework development board however, has these resistors built into the I/O so this is not required.
+\subsection{The PBASIC language}
+\label{sec:org7853f65}
+At the start of each PBASIC file, the BASIC stamp version and PBASIC version have to be identified as follows:
+\begin{center}
+\includegraphics[width=.9\linewidth]{image1.PNG}
+\end{center}
+From there on, variable declarations can be made like most low level languages, microcontroller pins can be set to be inputs or outputs and the subroutines of the program can be written.\newline
+Overall, the PBASIC language is similar to most low level languages but is slightly higher level than, say, AVR assembly. 
+
+\section{Code}
+\label{sec:org706d554}
+\begin{center}
+\includegraphics[width=200px]{image2.PNG}
+\end{center}
+
+On a breadboard, the push button switches PIN 10 to the board's 5V line with a pulldown resistor as follows:
+
+\begin{center}
+\includegraphics[width=200px]{image3.PNG}
+\end{center} 
+
+hence the value of the variable PBUTTON1 is usually 0. When the button is pressed, the value becomes 1 and the Blink subroutine is ran. This subroutine simply sets pin 11 which the LED is connected to to HIGH and back down to LOW after 1 second to blink the LED.
+
+\section{Discussion}
+\label{sec:orgcdbae14}
+This was a fairly simple lab and most of the work involved reading the manual to understand the basic syntax and workings of the BASIC Stamp board. After that, wiring up the circuit and writing the code only took a few minutes. The only issue I ran into was when creating the IF .. THEN .. statement. I initially tried just using the button's pin number for the IF statement's argument, however, this did not work so I then tried assigning a name to this pin number in the line "PBUTTON1 PIN 10". Using the PBUTTON1 variable, the code now worked to blink the LED.
+\end{document}

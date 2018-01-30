@@ -1,0 +1,11 @@
+#+TITLE: EE370 Lab 9
+#+SUBTITLE: Instructor: Paula Quintana
+#+AUTHOR: Jaap de Dood
+#+DATE: November 1st 2017
+#+OPTIONS: toc:nil
+#+LaTeX_HEADER: \usepackage[margin=1.01in]{geometry}
+* Activity 1
+In this activity we investigated using On-Off control using the circuit from last lab. On-off control is the simplest form of closed loop control. For example, In our case where we are trying to control the temperature using a heater, a certain temperature will be set as our "setpoint," and the heater will turn on if the current temperature is below the setpoint, and turn off if it is above the setpoint temperature.
+file:image1.jpg
+* Activity 2
+

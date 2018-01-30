@@ -1,0 +1,17 @@
+#include <iostream>
+#include <string>
+
+int main() {
+  std::string var1;
+  std::cout << "Enter the Password" << std::endl;
+  std::getline(std::cin, var1);
+  char var2[] = {0x27, 0x2d, 0x20, 0x26, 0x3a, 0x12, 0x20, 0x27, 0x24, 0x2d, 0x38, 0x04, 0x2f, 0x22, 0x33, 0x38, 0x31, 0x35, 0x24, 0x25, 0x3c};
+  for (int var3 = 0; var3 < 21; var3++) {
+    var2[var3] = var2[var3] ^ 0x41;
+  }
+  if (var1 == (std::string)var2)
+    std::cout << "Correct!\r\nUse that as the flag!" << std::endl;
+  else
+    std::cout << "Try Again..." << std::endl;
+  return 0;
+}

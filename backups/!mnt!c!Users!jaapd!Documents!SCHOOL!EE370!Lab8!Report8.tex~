@@ -1,0 +1,322 @@
+% Created 2017-10-26 Thu 01:29
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage[margin=1.01in]{geometry}
+\author{Jaap de Dood}
+\date{October 24 2017}
+\title{EE370 Lab 8\\\medskip
+\large Instructor: Paula Quintana}
+\hypersetup{
+ pdfauthor={Jaap de Dood},
+ pdftitle={EE370 Lab 8},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 24.5.1 (Org mode 9.0.7)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\section{Activity 1}
+\label{sec:org144b451}
+This activity was simply a test of the LM34 temperature sensor. The following circuit was used to do this.
+\begin{center}
+\includegraphics[width=200px]{image1.jpg}
+\end{center}
+The same data monitoring code and StampPlot macro from previous labs were used and the LM34 package was briefly heated using a lighter.
+\begin{center}
+\includegraphics[width=200px]{image2.jpg}
+\end{center}
+The voltage spikes up as heat is applied and decays exponentially as expected.
+\section{Activity 2}
+\label{sec:orge9805a0}
+Using the same circuit as activity 1, this time with a new code:
+\begin{verbatim}
+' -----[ Title ]-----------------------------------------------------------
+' Process Control - AdcSpanOffset.bs2
+' Tests the spanning and offset input range of the ADC 0831 using PWM
+' {$STAMP BS2}
+' {$PBASIC 2.5}
+' -----[ Declarations ]----------------------------------------------------
+ADC_ByteValue VAR Byte ' Analog to Digital Converter data
+V_Offset VAR Byte ' Offset voltage read from StampPlot
+V_Span VAR Byte ' Span voltage read from StampPlot
+TempF VAR Word ' Calculated temp in hundredths of degree F
+ADC_CS PIN 13 ' ADC Chip Select pin
+ADC_Clk PIN 14 ' ADC Clock pin
+ADC_Dout PIN 15 ' ADC Data output
+ADC_VRef PIN 10 ' Pin for PWM to set ADC voltage span
+ADC_Vminus PIN 11 ' Pin for PWM to set ADC Offset
+' -----[ Initialization ]--------------------------------------------------
+PAUSE 1000 ' Allow connection stabilization
+' -----[ Main Routine ]----------------------------------------------------
+DO
+ GOSUB ReadSP
+ GOSUB SetADC
+ GOSUB ReadADC
+ GOSUB CalcTemp
+ GOSUB UpdateSP
+ GOSUB PlotPoint
+ PAUSE 100
+LOOP
+' -----[ Subroutines ]-----------------------------------------------------
+ReadSP:
+ DEBUG CR,"!READ [(txtADCoffset),*,10]",CR ' obtain offset volt. in tenths
+ DEBUGIN DEC V_Offset
+ PAUSE 50
+ DEBUG "!READ [(txtADCspan),*,10]",CR ' obtain span voltage in tenths
+ DEBUGIN DEC V_Span
+ PAUSE 50
+ RETURN
+SetADC:
+ PWM ADC_Vminus, V_Offset * 255/50,100 ' Apply PWM to set offset volt.
+ PWM ADC_Vref, V_Span * 255/50,100 ' Apply PWM to set span voltage
+ RETURN
+ReadADC: ' Read ADC 0831
+ LOW ADC_CS ' Enable chip
+ SHIFTIN ADC_Dout, ADC_Clk, MSBPOST,[ADC_ByteValue\9] ' Clock in ADC data
+ HIGH ADC_CS ' Disable ADC
+ RETURN
+CalcTemp: ' y = mx + b
+ ' where y=temp,
+ ' m = (change in output)/(change in input) = voltage Span/255
+ ' x = ADC value read, b = offset, y = temperature in hundredths
+ ' temperature = (Span/255)Byte + Offset
+ TempF = (V_Span * 1000)/255 * ADC_ByteValue + (V_Offset * 1000)
+ RETURN
+UpdateSP:
+ DEBUG "!O txtByteBin = ", BIN8 ADC_ByteValue,CR, ' Update w/ binary ADC val
+ "!O txtByte = ", DEC ADC_ByteValue,CR ' Update w/ decimal ADC val
+ DEBUG "!O txtTemp = [", DEC TempF,",/,100]",CR ' Update w/ temperature/100
+ RETURN
+PlotPoint:
+ DEBUG "!FCIR (txtByte),(txtTemp),0.3A,(WHITE)",CR ' Plot white circle at
+ PAUSE 100 ' byte, Temp as X,Y
+ DEBUG "!FCIR ,,,(BLUE)",CR ' Plot again in blue
+ RETURN
+\end{verbatim}
+\subsection{What is the minimum input voltage that can be represented digitally by the ADC at full scale?}
+\label{sec:org60705dd}
+Full scale \(\Rightarrow\) 5V in 255 steps
+\[\Rightarrow V_{step} = 5/255 = 0.0196V\]
+Hence, the minimum input voltage that can be read will be 0.0196V. This is the minimum increase the ADC can read.\newline\newline
+The temperature on the LM34 was again increased and the device was left to cool. This time, the temperature was not being plotted against time, but against its byte value. At 0-500F scale, the temperature readings seem to be at quite a good resolution as the points are very close together.
+\begin{center}
+\includegraphics[width=200px]{image3.jpg}
+\end{center}
+Fitting the temperature scale to our range of points, however, there is quite some space between each point. This is not good if accurate temperature measurement in this range is required.
+\begin{center}
+\includegraphics[width=200px]{image4.jpg}
+\end{center}
+In an attempt to produce a higher resolution plot, the circuit was then altered as follows:
+\begin{center}
+\includegraphics[width=200px]{image5.jpg}
+\end{center}
+And "ADC Span" and "ADC Offset" in StampPlot were set to 0.5 and 0.7 respectively. This setup produced the following plots with scales 0-500F and 70-120F:
+\begin{center}
+\includegraphics[width=200px]{image6.jpg}
+\end{center}
+\begin{center}
+\includegraphics[width=200px]{image7.jpg}
+\end{center}
+These plots show a better resolution than before, thanking to the changes in the span and offset values mentioned. 
+\subsection{What is the ADC Span/Offset?}
+\label{sec:orgcdb4df9}
+The ADC converts an analog value to a digital, 8-bit value from 0 to 255. The ADC span is the range of voltages it will assign to the digital values 0-255 and the offset is the starting point of these values, relative to 0. For example, if the span is set to 5 and the offset to 0, the ADC will output 00000000 at 0V input and 11111111 (=255) at 5V or above input. With on offset of, for example, 1 and a span of 10, an input of 1V or less will now be assigned 00000000 and 11111111 will be 11V.
+\subsection{If you want to represent temperatures between 70F AND 120F using the full scale (8 bits) of the ADC, what should be your ADC Span and ADC Offset?}
+\label{sec:orgd2bbc4a}
+For a range of 70-120F, an offset of 0.7V (70F) and span of 0.5V (1.2V-0.7V) would be required.
+\section{Challenge 6-2}
+\label{sec:org2cc7eab}
+1: What values of V\(_{\text{Span}}\) and V\(_{\text{Offset}}\) would be appropriate?
+
+50F = 0.5V, 90F = 0.9V \(\Rightarrow\) span of 0.4V, offset of 0.5V.\newline\newline
+2: What would be the resolution in degrees Fahrenheit for this range of temperature?
+
+Over a range of 40F, with 255 steps, resolution = \(\frac{40}{255}=0.1568\)\newline\newline
+3: Draw a graph of byte value vs. temperature. 
+\begin{center}
+\includegraphics[width=200px]{image72.jpg}
+\end{center}
+4: What would be the equation for this line?
+\[T(x) = 0.1568x + 50\]\newline\newline
+5: At 72F, what would be: a. the output of the LMP4 b. the byte value of the ADC0831
+
+The LM34 outputs 0.1V/degreeF \(\Rightarrow\) 72F = 0.72V. Using equation from question 5:
+\[72 = 0.1568x + 50\]
+\[x = \text{byte value} = 141\]
+\section{Activity 3}
+\label{sec:org2aa71cb}
+In this activity, an "incubator" was temperature controlled using a resistor as heater and a fan for cooling in the following circuit:
+\begin{center}
+\includegraphics[width=200px]{image8.jpg}
+\end{center}
+Initially, the following code was used to be able to control the circuit manually.
+\begin{verbatim}
+' -----[ Title ]-----------------------------------------------------------
+' Process Control - IncubatorManual.bs2
+' Allows manual control of incubator heater and fan via StampPlot
+' {$STAMP BS2}
+' {$PBASIC 2.5}
+' -----[ Declarations ]----------------------------------------------------
+ADC_ByteValue VAR Byte ' Analog to Digital Converter data
+V_Offset VAR Byte ' Offset voltage read from StampPlot
+V_Span VAR Byte ' Span voltage read from StampPlot
+TempF VAR Word ' Calculated temp. in hundredths of degree F
+ADC_CS PIN 13 ' ADC Chip Select pin
+ADC_Clk PIN 14 ' ADC Clock pin
+ADC_Dout PIN 15 ' ADC Data output
+ADC_VRef PIN 10 ' Pin for PWM to set ADC voltage span
+ADC_Vminus PIN 11 ' Pin for PWM to set ADC Offset
+Heater PIN 5 ' Pin for heater control
+Fan PIN 0 ' Pin for Fan control
+' -----[ Initialization ]--------------------------------------------------
+LOW Heater ' Heater off
+LOW Fan ' Fan off
+PAUSE 1000 ' Connection stabilization
+GOSUB ReadSP_Temps ' Get temp span and offset from StampPlot
+' -----[ Main Routine ]----------------------------------------------------
+DO
+ GOSUB ReadSP_Controls
+ GOSUB SetADC
+ GOSUB ReadData
+ GOSUB CalcTemp
+ GOSUB PlotTemp
+ PAUSE 500
+LOOP
+' -----[ Subroutines ]-----------------------------------------------------
+ReadSP_Temps:
+ DEBUG CR,"!READ (txtTMin)",CR ' obtain min temperature (offset)
+ DEBUGIN DEC V_Offset
+ PAUSE 50
+ DEBUG "!READ [(txtTMax),-,(txtTMin)]",CR ' obtain temperature span
+ DEBUGIN DEC V_Span
+ PAUSE 50
+RETURN
+ReadSP_Controls:
+ DEBUG CR,"!READ (swHeat)",CR ' obtain state of heater control
+ DEBUGIN DEC Heater
+ PAUSE 50
+ DEBUG "!READ (swFan)",CR ' obtain state of fan control
+ DEBUGIN DEC Fan
+ PAUSE 50
+RETURN
+SetADC:
+ PWM ADC_Vminus, V_Offset * 255/500,100 ' PWM ADC offset voltage
+ PWM ADC_Vref, V_Span * 255/500,100 ' PWM ADC Span voltage
+RETURN
+ReadData: ' Read ADC 0831
+ LOW ADC_CS ' Enable chip
+ SHIFTIN ADC_Dout, ADC_Clk, MSBPOST,[ADC_ByteValue\9] ' Clock in ADC data
+ HIGH ADC_CS ' Disable ADC
+RETURN
+CalcTemp: ' Calculate temp in hundredths
+ TempF = (V_Span * 100)/255 * ADC_ByteValue + (V_Offset * 100)
+RETURN
+PlotTemp:
+ DEBUG "[", DEC TempF,",/,100]",CR ' Plot temperature/100
+ DEBUG IBIN Heater,BI
+\end{verbatim}
+Uploading this circuit with the matching StampPlot macro, the fan and heater could be controlled manually. The heater was turned on periodically, followed by the fan, to produce the following plot:
+\begin{center}
+\includegraphics[width=200px]{image9.jpg}
+\end{center}
+There appears to be a little spike in temperature when the fan is turned on. This is not an actual spike in temperature so it is likely related to the power being drawn from the BASIC Stamp board by the fan.\newline\newline
+The temperature is being measured correctly and the inputs to the system are controlling the temperature, however, it is difficult to control the temperature accurately by manually turning on and off the devices as there is a huge delay between the moment the fan or heater is turned off and the time it takes to heat up a few degrees. This causes overshooting, undershooting and requires a human controlling the system constantly. Instead, a system using open-loop process control is investigated in the next activity.
+\section{Activity 4}
+\label{sec:orge22b160}
+The same circuit from activity 3 was used but this time with a different code:
+\begin{verbatim}
+' -----[ Title ]-----------------------------------------------------------
+' Process Control - IncubatorOpenLoop.bs2
+' Drive incubator with a user defined PWM drive
+'
+' {$STAMP BS2}
+' {$PBASIC 2.5}
+'
+' -----[ Declarations ]----------------------------------------------------
+ADC_ByteValue VAR Byte ' Analog to Digital Converter data
+V_Offset VAR Byte ' Offset voltage read from StampPlot
+V_Span VAR Byte ' Span voltage read from StampPlot
+TempF VAR Word ' Calculated temp in 100ths of degree F
+PWM_Drive VAR Byte ' Amount of PWM for heater 
+x VAR Byte ' General counting variable
+ADC_CS PIN 13 ' ADC Chip Select pin
+ADC_Clk PIN 14 ' ADC Clock pin
+ADC_Dout PIN 15 ' ADC Data output
+ADC_VRef PIN 10 ' Pin for PWM to set ADC voltage span
+ADC_Vminus PIN 11 ' Pin for PWM to set ADC Offset
+Heater PIN 5 ' Pin for heater control
+Fan PIN 0 ' Pin for Fan control
+' -----[ Initialization ]--------------------------------------------------
+LOW Heater ' Heater off
+LOW Fan ' Fan off
+PAUSE 1000 ' Connection stabilization
+GOSUB ReadSP_Temps ' Get temp span and offset from StampPlot
+' -----[ Main Routine ]----------------------------------------------------
+DO
+ GOSUB ReadSP_Controls
+ GOSUB Drive_Heater
+ GOSUB SetADC
+ GOSUB ReadADC
+ GOSUB CalcTemp
+ GOSUB PlotTemp
+ PAUSE 500
+LOOP
+' -----[ Subroutines ]-----------------------------------------------------
+ReadSP_Temps:
+ DEBUG CR,"!READ (txtTMin)",CR ' Request and store minimum temp (offset)
+ DEBUGIN DEC V_Offset
+ PAUSE 50
+ DEBUG "!READ [(txtTMax),-,(txtTMin)]",CR ' Request and store temp span
+ DEBUGIN DEC V_Span
+ PAUSE 50
+ RETURN
+ReadSP_Controls:
+ DEBUG CR,"!READ (sldPWM)",CR ' Request and store state of heater control
+ DEBUGIN DEC PWM_Drive
+ PAUSE 50
+ DEBUG "!READ (swFan)",CR ' Request and store state of fan control
+ DEBUGIN DEC Fan
+ PAUSE 50
+ RETURN
+Drive_Heater:
+ FOR x = 0 TO 20 ' Drive heater for 20 repetitions
+ PWM Heater, PWM_Drive * 255/100, 100 ' %Duty converted to 0-255 for PWM 
+NEXT
+ RETURN
+SetADC:
+ PWM ADC_Vminus, V_Offset * 255/500,100 ' PWM ADC offset voltage
+ PWM ADC_Vref, V_Span * 255/500,100 ' PWM ADC Span voltage
+ RETURN
+ReadADC: ' Read ADC 0831
+ LOW ADC_CS ' Enable chip
+ SHIFTIN ADC_Dout, ADC_Clk, MSBPOST,[ADC_ByteValue\9] ' Clock data from ADC
+ HIGH ADC_CS ' Disable ADC
+ RETURN
+CalcTemp: ' Calculate temp in 100ths
+ TempF = (V_Span * 100)/255 * ADC_ByteValue + (V_Offset * 100)
+ RETURN
+PlotTemp:
+ DEBUG "[", DEC TempF,",/,100]",CR ' Plot temperature/100
+ DEBUG IBIN Fan,CR ' Plot state of Fan as Digital
+ DEBUG "!O txtPWM = ", DEC PWM_Drive,CR ' Update PWM text
+ RETURN 
+\end{verbatim}
+In this code, a PWM signal is sent to the "heater" to heat the system more accurately, rather than simply "on" or "off". This way, the heat can be adjusted to match the heat lost from the system at a certain temperature. This was tested by heating up the system to about 100F and adjusting the PWM to keep the temperature constant at 100 for a while. Then, the fan was turned on to cool the system back down.
+\begin{center}
+\includegraphics[width=200px]{image10.jpg}
+\end{center}
+\end{document}

@@ -1,0 +1,32 @@
+#+TITLE: How a Bipolar Junction Transistor Works
+#+SUBTITLE: EE 330
+#+AUTHOR: Jaap de Dood
+#+DATE: October 31, 2017
+#+OPTIONS: toc:nil
+#+OPTIONS: tex:t
+#+LaTeX_HEADER:\usepackage[margin=1.0in]{geometry}
+
+A bipolar junction transistor (BJT) is a class of devices known as transistors, which are used to amplify or switch signals electronically. In order to understand how it does this, first, we must look at the most basic semiconductor device, a p-n junction; also known as a diode. A p-n junction consists of a piece of semiconductor material "doped" with extra positive charge carriers (holes) adjacent to a piece of semiconductor material doped with extra negative charge carriers (electrons). As these charge carriers are mobile in their semiconductor substrate, they will diffuse along their concentration gradients. At equilibrium, this diffusion of charge carriers creates an area between the p and n materials where holes and electrons have recombined to form a region with no mobile charge carriers known as the depletion region. This creates an electric field that charge carriers must overcome to cross this region.
+
+Applying a forward bias to the p-n junction gives the majority carriers enough energy to travel through the depletion region and narrows the depletion region. As this happens, the drift current increases rapidly and the current across the junction increases exponentially as described by Shockley diode equation.
+\begin{equation}
+I=I_S(e^{\frac{V_D}{nV_T}}-1)
+\end{equation}
+Where I_S is the reverse bias saturation current, V_D is the voltage across the diode and V_T is the thermal voltage.
+
+It is important to understand how a p-n junction works as a BJT consists of either a layer of n, p and n type materials or p, n and p type materials. This means a transistor can be seen as two p-n junctions facing in opposite directions. Although for certain applications it may be sufficient to model a BJT as such, it is not simply two back-to-back diodes as there are some modifications. Firstly, The semiconductor material adjacent to both other materials, known as the base, is very thin in width and the emitter is more heavily doped than the other materials. The third material is known as the collector.
+
+So how does this special arrangement of semiconductor materials "amplify" signals? Using an npn transistor as example, if a positive bias is applied to the base of the transistor, the base-emitter junction will be forward biased and hence the depletion region between the base and the emitter will decrease in width. As mentioned, the emitter region is heavily doped and so there will be diffusion of a huge amount of majority carriers from the emitter to the base. In the case of an npn transistor, these will be electrons. As these electrons enter the base region, they will begin recombining with the holes in this p-type material, however, the base is only very thin, so not much recombination will occur. If, now, a positive bias is also applied to the collector, the electrons will pass straight through the base as they are attracted by the positive potential at the collector and hence we have created a significant diffusion of electrons from the emitter to the collector. This is how a BJT acts as an amplifier, as the small forward bias applied on the base created a much larger collector-emitter current. If the input to the base was an AC signal, the output at the collector/emitter would be identical but amplified by a factor of \beta and phase-shifted by 90\(^{\circ}\).
+
+The current of majority carriers from emitter to base is the main current of interest, but in order to gain a full understanding of all the characteristics of a BJT, all currents must be considered. Regardless of the transistor type, the emitter to base current is a sum of the electron diffusion current, i_{E_n}, and the hole diffusion current i_{E_p}. Which of these two is the main contributor to the current,however, is of course dependent on the transistor type. Likewise, the electron or hole diffusion current from the base to the collector is known as i_{C_p} and i_{C_n}. As mentioned, very little electron-hole pair recombination occurs at the base region, so in an npn transistor, for example, where the main emitter-collector current is due to electrons, i_{E_n} and i_{C_n} will be almost equal. There is still always some recombination taking place, however, and this also causes a base current known as I_{B2}. I_{B1} is also known as I_{E_n} as it is the diffusion current of electrons from the emitter to the base. Most of the electrons from the emitter are attracted by the collector of course, so I_{E_n} << I_{E_p}. The third component of the base current, I_{B3}, is due to the fact that the base-collector junction is reverse biased so, as with any p-n junction, there is a small reverse leakage current due to carriers that happen to cross the depletion region. The total base current is the sum of each of these components.
+\begin{equation}
+I_B = I_{B1}+I_{B2}+I_{B3}
+\end{equation}
+
+One aspect of a BJT to consider is that, as all the currents just mentioned are diffusion currents, they are heavily dependent on temperature. In the configuration mentioned earlier, using the base as input, collector as output with a common emitter (common emitter configuration), the dc current gain of the amplifier is given by 
+\begin{equation}
+\beta_{DC} = \frac{I_{out}}{I_{in}} = \frac{I_C}{I_B}
+\end{equation}
+Increasing the temperature of a transistor provides energy to the semiconductor material, giving more electrons enough energy to cross the bandgap to the valence band and thus increasing the rate of electron-hole pair generation. A larger number of electron-hole pairs means a higher conductivity, which is comparable to the emitter region being more heavily doped. As a result, the emitter-collector current will increase and hence \beta_{DC} is not a constant. If a constant gain is required, the circuit surrounding the BJT must designed as to be relatively independent from \beta.
+
+Another aspect to consider is the operating range of a BJT. There is only a certain region where the output current is proportional to the input current. This is known as the active region. If there is not enough current to forward bias the base-emitter junction, or if both junctions are reversed biased, the transistor will be in cut-off. If both base-emitter and base-collector junctions are forward biased, 

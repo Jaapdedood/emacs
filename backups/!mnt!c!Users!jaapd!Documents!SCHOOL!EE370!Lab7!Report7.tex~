@@ -1,0 +1,166 @@
+% Created 2017-10-22 Sun 18:17
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage[margin=1.01in]{geometry}
+\author{Jaap de Dood}
+\date{October 21 2017}
+\title{EE370 Lab 7\\\medskip
+\large Instructor: Paula Quintana}
+\hypersetup{
+ pdfauthor={Jaap de Dood},
+ pdftitle={EE370 Lab 7},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 24.5.1 (Org mode 9.0.7)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\section{Activity 4}
+\label{sec:org253b9a3}
+In this lab, some of the most common configurations of op-amps are investigated using the BASIC Stamp and StampPlot. The following circuit was constructed:
+\begin{center}
+\includegraphics[width=200px]{image1.jpg}
+\end{center}
+In this circuit, a PWM signal from pin 2 of the BASIC Stamp is input into an LM358n op-amp in unity gain buffer configuration. This means the voltage output of the op-amp should be exactly the voltage input from the pin 2 PWM signal. This was tested by plotting the output from the op-amp, fed to the ADC, in StampPlot.
+\begin{center}
+\includegraphics[width=300px]{image2.jpg}
+\end{center}
+In this plot, the PWM values are increased in increments of 25, where a value of 255 should be 5V, however, as you can see on the plot the voltage measured only goes up to 3.7V. This is because the output voltage of the op-amp can only go up to the voltage of its supplies minus a few volts drop due to voltage drop across the transistors inside the op-amp IC. In this case, the op amp is connected to the +5V rail of the BASIC Stamp and the maximum output voltage is 3.7V.\newline\newline
+ When the + supply of the op-amp is, instead, connected to V\(_{\text{in}}\) on the BASIC Stamp, the output voltage can reach the full 5V input as shown in the following plot
+\begin{center}
+\includegraphics[width=300px]{image3.jpg}
+\end{center}
+\subsection{Why would you use a buffer circuit to interface two circuits?}
+\label{sec:orgdc342b8}
+A voltage buffer circuit such as the one investigated in this activity could be used to isolate one circuit from another, as the current output by the op-amp is a stable, low amount regardless of the current of the input circuit. This same property can also be used to reduce or increase the current supplied to a load. A low-impedance load, for example, may draw a huge current from a power supply. If a voltage buffer is connected between the two, the op amp will draw very little current from the power source because of its high imput impedance, and the load will draw a small current supplied by the op-amp. Likewise, if one circuit, for example a microcontroller, can only supply a small current like 1mA then a voltage buffer could supply at least 10mA at the same voltage.
+\section{Activity 5}
+\label{sec:org678bef0}
+In this activity, the op-amp is set up as a non-inverting amplifier. This is done by adding a voltage divider circuit to the negative feedback loop. If a voltage divider of two equal resistors is used, the output voltage has to be doubled for the voltage at the inverting input to match that at the non-inverting input, hence, the op amp will have a gain of 2. The following circuit was built to test this.
+\begin{center}
+\includegraphics[width=230px]{image4.jpg}
+\end{center}
+Which produced the following plot:
+\begin{center}
+\includegraphics[width=300px]{image5.jpg}
+\end{center}
+The plot shows how at a PWM value of 50, which is an input voltage of \(50*\frac{5}{255} = 0.98V\), the output voltage is about 2V. Of course, as before, the output voltage cannot exceed the voltage at the supplies minus a few volts.
+\section{Challenge 5-5}
+\label{sec:orgcef9d44}
+In this challenge, R\(_{\text{f}}\) is replaced by a 4.7k\(\Omega\) resistor. Now, the gain of the op-amp will be 
+\[A_V = 1 + \frac{Rf}{Rs} = 1 + \frac{4.7k}{10k} =  1.47\]
+At a PWM value of 255 (5V) we should expect to see an output voltage of 7.35. However, this may exceed the max voltage the op-amp can supply, so the output may simply be the supply voltage. At a PWM value of 25, which is an input voltage of \(5V \cdot \frac{25}{255}=0.49V\) we expect to see an output voltage of 
+\[V_o = 0.49 \cdot 1.47 = 0.72V\]
+Also with this gain, the output step resolution is \(\frac{1}{255} \cdot 7.35 = 0.02882V\) which equals a \% resolution of 
+\[\% \text{resolution} = \frac{0.2882}{7.35} \cdot 100\% = 3.92\%\]
+This is still the same resolution as before as the number of steps hasn't changed and the step size and total voltage change proportionally.\newline\newline
+The values measured experimentally were plotted:
+\begin{center}
+\includegraphics[width=300px]{image6.jpg}
+\end{center}
+And as can be seen, the values of 0.72V @ PWM = 25 and 7.35 @ 255 are as predicted.
+\subsection{What is an active filter? What are the differences/benefits to a passive filter?}
+\label{sec:org69f8364}
+An analog filter is a circuit that uses active components such as an op-amp or BJT, rather than passive components such as an inductor, to remove certain frequency components from a signal. The circuit used in this activity is an example of a low pass active filter with amplification. This circuit constists of a passive RC circuit that filters high frequencies as input to the op-amp. The op-amp's high input impedance and low output impedance provide isolation between the stages to prevent unwanted loading of the source or load. This is a major benefit of an active filter. Other benefits include the fact that the gain can easily be adjusted and op-amps are ofter cheaper than inductors. Drawbacks are that an active filter requires an external power source and the frequency output is limited by the amplifier's bandwidth.
+\section{Activity 6}
+\label{sec:org963046a}
+In this activity, the output from the op-amp was connected to the base of a transistor controlling a fan.
+\begin{center}
+\includegraphics[width=250px]{image7.jpg}
+\end{center} 
+This way, the voltage delivered to the fan is dependent on the voltage output by the op-amp. This means the large voltage on the fan (could be up to 12V) can be controlled using a small signal from our microcontroller. This is a major application of amplifiers in electronics. When the PWM value from the BASIC Stmap was inncreased, the fan can be heard and seen spinning faster. This was investigated more precisely in the next challenge.
+\section{Challenge 5-6}
+\label{sec:org072d42d}
+In order to investigate the driving of the fan using our filter circuit more accurately, the RPM of the fan was measured. First, the PwmFiltering.bs2 code had to be modified from before in order to record the fan rpm values. The resulting code is shown.
+\begin{verbatim}
+' -----[ Title ]-----------------------------------------------------------
+' Process Control - Challenge 5-6
+' Control of PWM filtering circuits through StampPlot
+' {$STAMP BS2}
+' {$PBASIC 2.5}
+' -----[ Declarations ]----------------------------------------------------
+ADC_DataIn VAR Byte ' Analog to Digital Converter data
+PWM_Val VAR Byte ' Amount of PWM to apply as read from StampPlot
+SampleAmount VAR Word ' Amount of time to apply as read from StampPlot
+SampleCount VAR Word ' Count of applied PWM
+Fan PIN 2 ' PWM Drive pin - For fan eventually
+ADC_CS PIN 13 ' ADC Chip Select pin
+ADC_Clk PIN 14 ' ADC Clock pin
+ADC_Dout PIN 15 ' ADC Data output
+Opto_SW PIN 8
+Opto_Count VAR Word ' Count from opto-reflective switch
+RPM VAR Word ' Calculated RPM
+CyclesPerRev CON 2 ' Number of pairs on encoder used
+
+' -----[ Initialize ] -----------------------------------------------------
+PAUSE 1000 ' Connection stabilization
+' -----[ Main Routine ]----------------------------------------------------
+DO
+ GOSUB Read_SP ' Read setting from StampPlot
+ GOSUB DrivePWM ' Drive output
+ FOR SampleCount = 1 TO SampleAmount ' Read ADC for number of samples
+ GOSUB Read_ADC
+ GOSUB ReadTach
+ DEBUG "!STAT RPM=", DEC RPM, CR
+ GOSUB PlotData ' Plot data
+ NEXT
+LOOP
+' -----[ Subroutines ]-----------------------------------------------------
+READ_SP:
+ DEBUG "!READ (sldPWM)",CR ' Request PWM slider val. from StampPlot
+ DEBUGIN DEC PWM_Val ' Accept value and store
+ PAUSE 100
+ DEBUG "!READ (sldSample)",CR ' Request number for sample from StampPlot
+ DEBUGIN DEC SampleAmount ' Accept value and store
+ PAUSE 100
+RETURN
+DrivePWM:
+ DEBUG "^TEXT (PTIME),105A,0.8A,(BLACK),PWM\n",DEC PWM_Val,CR ' Label plot
+ PWM Fan, PWM_Val, 255 ' Drive PWM
+RETURN
+Read_ADC: ' Read ADC 0831
+ LOW ADC_CS ' Enable chip
+ SHIFTIN ADC_Dout,ADC_Clk, MSBPOST,[ADC_DataIn\9] ' Clock in data from ADC
+ HIGH ADC_CS ' Disable ADC
+RETURN
+PlotData: ' Send voltage data to StampPlot
+ DEBUG DEC ADC_DataIn ,",",
+ "[",DEC ADC_DataIn,",*,0.0392]",CR
+ PAUSE 50
+RETURN
+ReadTach:
+ COUNT Opto_SW, 1000, Opto_Count ' Measure counts per unit time
+ RPM = Opto_Count*60/CyclesPerRev ' Calculate RPM
+ RETURN
+\end{verbatim}
+The "ReadTach" subroutine from an earlier lab was used including pertinant declarations. Furthermore, a call to this subroutine and a console output of the RPM value were added in the main loop:
+\begin{verbatim}
+GOSUB ReadTach
+DEBUG "!STAT RPM=", DEC RPM, CR
+\end{verbatim}
+Now, running the code with the opto-reflective sensor aimed at the fan, the following readings were taken.
+\begin{center}
+\begin{tabular}{rrrr}
+PWM Value & Corresponding Voltage & RPM & RPM/Volt\\
+\hline
+110 & 2.4 & 990 & 412.5\\
+130 & 2.89 & 1200 & 415.2\\
+150 & 3.33 & 1260 & 378.4\\
+170 & 3.78 & 1270 & 335.9\\
+\end{tabular}
+\end{center}
+Any values lower than 110 could not make the fan spin and higher than 170 the RPM stayed constant at 1270.
+\end{document}

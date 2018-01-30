@@ -1,0 +1,111 @@
+% Created 2017-09-07 Thu 00:48
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage[margin=1.0in]{geometry}
+\usepackage{amsmath}
+\author{Jaap de Dood}
+\date{Sept. 4, 2017}
+\title{EE330 Lab 1\\\medskip
+\large Measurement Loading}
+\hypersetup{
+ pdfauthor={Jaap de Dood},
+ pdftitle={EE330 Lab 1},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 24.5.1 (Org mode 9.0.7)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\section{Abstract}
+\label{sec:org4ac5e37}
+This experiment was divided into three parts: A voltage divider circuit with AC input to measure difference in voltage readings using different instruments, the "half deflection" method to measure input resistance and a similar experiment to measure input Capacitance.
+It was found that the voltage measured with a multimeter, oscilloscope and oscilloscope using x10 scope varied greatly from 50.4mV to 356.0mV. The input resistance of the oscilloscope was found to be 0.97M\(\Omega\) using the half deflection method and the input capacitance was calculated to be 371pF. 
+
+\section{Introduction}
+\label{sec:orgecfc942}
+Observational errors are inherent to any process of measurement. This is especially true in electronics as measurement devices all have inherent properties that alter the system being observed. For example, when an oscilloscope is connected to a circuit it will add a certain impedance in the form of a large resistive impedance and a small capacitance in parallel with the terminals being measured. 
+The significance of the effect of this input impedance depends on the ratio of the impedance values of the measuring instruments and the components. For example, when measuring the voltage across a 1\(\Omega\) resistor using an oscilloscope with an input resistance of 1M\(\Omega\) the equivalent resistance will be 
+\[R_T = \frac{(1\cdot1M)}{(1+1M)} = \frac{1M}{1000001} = 0.999999\Omega\]
+Which is only a 0.0001\% error from the accepted value and will be negligible in most cases. However, when using the same oscilloscope to measure the voltage across a 1M\(\Omega\) resistor, the equivalent resistance will now be:
+\[R_T = \frac{1M\cdot1M}{(1M+1M)} = \frac{1\times10^{12}}{2\times10^{6}} = 0.5M\Omega\]
+Which is a 50\% error from the accepted value and hence will completely alter the circuit.\newline
+As mentioned previously, measuring instruments also add an input capacitance. This capacitance also carries along with it some reactance which adds to the input impedance, the effects of which will be explored in each experiment.\newline
+In the case of an oscilloscope, much of this input capacitance will be due to the coaxial cable used. For example a common coaxial cable, RG-58, exhibits approximately 25pF/ft capacitance and are often 3ft long hence adding 75pF of capacitance to the circuit. In combination with the input capacitance of the oscilloscope itself this small capacitance can cause a large disturbance at high frequencies.
+\section{Procedure}
+\label{sec:org476ddef}
+\subsection{Experiment 1}
+\label{sec:org1d3be07}
+The following circuit was constructed:
+\begin{center}
+\includegraphics[width=.9\linewidth]{schem1.PNG}
+\end{center}
+Vo was measured using a digital multimeter, digital oscilloscope using 1x probe and the same oscilloscope using a 10x probe. The frequency of the input signal was then raised to 10kHz and the procedure was repeated
+\subsection{Experiment 2}
+\label{sec:orgc5d6c0b}
+The following circuit was constructed:
+\begin{center}
+\includegraphics[width=.9\linewidth]{schem2.PNG}
+\end{center}
+With the scope in series with a potentiometer, the resistance of the potentiometer, \(R_X\) was adjusted until the scope measured \(\frac{10V}{2} = 5V\). \(R_X\) was then disconnected and measured using a DMM.
+\subsection{Experiment 3}
+\label{sec:org62e9fb4}
+The same circuit as experiment 2 was used except an AC source at 10Vpp and a frequency of 5MHz was used. The frequency was set to such a high value to make the reactance due to the input capacitance much smaller than the input resistance and hence negligible. \(R_X\) was again adjusted for \(V_{in} = V_{Rx}\) and \(R_X\) measured. From \(R_X\), \(C_{in}\) was calculated by:
+\begin{equation}
+R_X = X_C = \frac{1}{\omega C_{in}} = \frac{1}{2\pi fC_{in}} \newline
+\implies C_{in} = \frac{1}{2\pi fR_X}
+\end{equation}
+\section{Results and Discussion}
+\label{sec:org7290efe}
+\subsection{Experiment 1}
+\label{sec:orga013c97}
+\begin{center}
+\begin{tabular}{lll}
+\(V_0\) at: & 0.1kHz & 10kHz\\
+\hline
+Multimeter & 169.8mV & 73.4mV\\
+Oscilloscope x1 & 356mV & 168mV\\
+Oscilloscope x10 & 50.4mV & 58.4mV\\
+\end{tabular}
+\end{center}
+
+By looking at the circuit you would expect the voltage across both resistors to be half of the input voltage, so 0.5V. The digital multimeter adds an input resistance of 10M\(\Omega\) in parallel to the 1M\(\Omega\) resistor so the new resistance here will be \(\frac{1M\cdot 10M}{1M + 10M} = 0.909M\Omega\). This means our new expected value for \(V_0\) is \[V_0 = 1\cdot \frac{0.909M}{1M + 0.909M} = 476mV\]
+It is important to notice that the power source is producing an AC signal, and the labeled voltage is peak-to-peak. When measuring an alternating voltage, the particular multimeter used measures the root mean square voltage. This explains why the voltage value measured is nowhere near 476mV. If we calculate the \(V_{RMS}\) for our AC signal:
+ \[V_{PP} = 476mV, V_{RMS} = \frac{476mV}{\sqrt 2} = 168.3mV\]
+Our measured value contained a 0.009\% error from this theoretical value.\newline\newline
+When using the oscilloscope to measure \(V_0\), the scope adds a 1M\(\Omega\) input resistance as discussed in the Introduction(2). Our theoretical value using the scope is calculated by:
+\[V_0 = 1\cdot \frac{0.5M}{1M + 0.5M} = 333mV\]
+The measured value contains a 6.9\% error from this theoretical value, most likely due to human error in reading the voltage from the oscilloscope graph.\newline \newline
+When setting the oscilloscope probe to the x10 setting, a 9M\(\Omega\) resistor is added in series with the 1M\(\Omega\) input resistance of the oscilloscope to make a total input resistance of 10M\(\Omega\). The x10 setting also attenuates the signal by a factor of 10, so the voltage read will be 1/10 of the actual voltage. Using this information we know the equivalent resistance will be the same as when using the multimeter (0.909M\(\Omega\)) and hence the theoretical \(V_0\) will be the same except divided by 10, so 47.6mV. The measured value contains a 0.056\% error.\newline \newline
+In addition to increasing the input resistance, a x10 probe also significantly reduces the input capacitance. When raising the frequency of the input signal to 10kHz, the measurements by the DMM and oscilloscope using x1 probe contain a huge error. This is because increasing the frequency decreases the input reactance, \(X_C\) which alters the result. To calculate the actual value for these results you would have to accurately measure or calculate the input capacitance or reactance before proceeding. Thankfully, as the x10 probes reduces the input capacitance the reading only contains an error of 0.23\% which is acceptable.
+
+\subsection{Experiment 2}
+\label{sec:org9691760}
+The resistance of the potentiometer measured after it was removed from the circuit was 0.97M\(\Omega\). The oscilloscope is rated with an input resistance of 1M\(\Omega\) so we were able to confirm this experimentally. 
+
+\subsection{Experiment 3}
+\label{sec:org50981d8}
+Using an input voltage of 10\(V_{PP}\) at 5MHz, the resistance of the potentiometer after being removed from the circuit was 85.8\(\Omega\). Using equation (1) we can calculate:
+\[C_{in} = \frac{1}{2\pi \cdot 5M \cdot 85.8} = 371pF\]
+This is a rather large input capacitance compared to the expected value of about 16pF from the scope and \textasciitilde{}100pF from the cable/probe. This large error is likely due to the fact that a far too high frequency was used. A frequency of 20-100kHz would have been enough to make the input reactance negligible but would not have caused the disturbance that 5MHz caused. Using a 2M\(\Omega\) potentiometer it was also difficult to calibrate the resistance to make \(V_{Rx} = V_{Rin}\) as a low resistance was required. \newline
+In an ideal experiment a frequency of around 30kHz would have been used which would have yielded an input capacitance of about 120pF. This may seem like a small capacitance but at a frequency of 1MHz this causes an input reactance of
+\[X_C = \frac{1}{2\pi \cdot 1M\cdot 120p} = 1.3k\Omega\] 
+Such a value will cause significant disturbance even in low impedance circuits. This explains the large errors in experiment 1 when the input signal frequency was increased to 10kHz.
+\section{Appendix}
+\label{sec:orgc745939}
+Percentage Error calculation:
+\[\text{Percentage error} = \frac{\text{Theoretical Value} - \text{Measured Value}}{\text{Theoretical Value}} \cdot 100%\]
+\end{document}

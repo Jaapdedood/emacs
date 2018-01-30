@@ -1,0 +1,103 @@
+% Created 2017-09-19 Tue 01:28
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage[margin=1.0in]{geometry}
+\author{Jaap de Dood}
+\date{Sept. 14, 2017}
+\title{EE330 Lab 1\\\medskip
+\large Diode Characteristics}
+\hypersetup{
+ pdfauthor={Jaap de Dood},
+ pdftitle={EE330 Lab 1},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 24.5.1 (Org mode 9.0.7)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\section{Abstract}
+\label{sec:org81b2071}
+In this experiment, I-V values for various types of diodes were measured and the corresponding curves were drawn. The difference of the curve shapes compared to diode theory were observed and the reverse leakage current was estimated by measurement. Finally, the breakdown curve of a silicon zener diode was recorded.
+\section{Introduction}
+\label{sec:org1e562e9}
+The ideal diode equation is as follows:
+\[I_D = I_0(e^(\frac{V_D}{V_T})-1)\]
+Where \(V_D\) is the voltage across the diode and \(V_T\) is the thermal voltage.\newline\newline
+From this equation, we can sketch the expected I vs V graph:
+\begin{center}
+\includegraphics[width=150px]{image1.png}
+\captionof{figure}{Graph described by ideal diode equation}
+\end{center}
+As long as \(V_D << V_T\), \(I_D \approx -I_0\), however, as soon as \(V_D\) suprasses the thermal voltage, the forward current increases exponentially. This happens because at this point the voltage is sufficient for the electrons to flow through the depletion region between the p-n junction.\newline\newline
+The characteristics of different types of diodes vary as they can be manufactured using different methods, made from different semiconductor crystals with varying bandgap energies or contain different carrier densities due to different levels of doping. The exact structure of the p-n junction in a diode affects its characteristics hence all of these discrepancies may alter the way a diode behaves. This will be investigated in this lab as well as investigating the breakdown voltage of a special kind of diode: a zener diode. Zener diodes are similar to normal diodes, except they are designed specifically as to have a reduced breakdown voltage. This way, the can safely operate at their breakdown voltages without causing permanent damage by overheating.\newline\newline
+The reverse leakage current of a diode is a small current that will flow through a diode when reverse biased. The potential applied to the diode by a voltage source causes the semiconductor's minority charge carriers to flow. Since it is only the minority charge carriers, this current is very low until the diode's breakdown voltage is reached. At this voltage, the high applied voltage causes atoms in the crystal to begin ionizing in a process called avalanching. 
+\section{Procedure}
+\label{sec:orgad1929f}
+\subsection{Measuring I-V curves for various diodes}
+\label{sec:org89b9827}
+In each of these experiments, a diode was simply placed in series with a power supply and a resistor in the following circuit:
+\begin{center}
+\includegraphics[width=200px]{./image2.jpg}
+\captionof{figure}{Forward characteristics measurement circuit}
+\end{center}
+The voltage on the power supply was then varied to produce various currents in the circuit. Initially a 1M\(\Omega\) resistor was placed in the circuit and the voltage was varied from 1V to 10V to produce a current of 1\(\mu\) A to 10\(\mu\) A. Then, the resistor was swapped out for a 300K\(\Omega\), 10K\(\Omega\) and finally 1K\(\Omega\) while varying the voltage each time to create the desired current.\newline\newline
+The Voltage was measured over 4 log units of I with 3 sample points at each log unit. So 1\(\mu\) A, 2\(\mu\) A, 5\(\mu\) A, 10\(\mu\) A, 20\(\mu\) A and so on (see results tables).
+\subsection{Measuring reverse leakage current}
+\label{sec:orgc2493d0}
+To measure the reverse leakage current, the terminals of the diode in the circuit (Figure 2) were swapped, a 1K resistor was used and the voltmeter was removed from the circuit. The voltmeter has to be removed as its input resistance would prevent any current from flowing through the diode to be measurable.
+\subsection{Zener diode breakdown curve}
+\label{sec:org8e6e2af}
+To measure the zener diode breakdown curve the circuit in Figure 1 was again constructed but with a zener diode in the reverse direction to shown in the diagram. A 1M\(\Omega\) resistor was used. The breakdown voltage was roughly estimated by fluctuating the voltage and seeing the point where the reverse current rapidly increases. Then, starting 1V below this estimated value, the voltage was increased in 0.2-0.3V steps and the current was measured at each step to find an accurate value for the breakdown voltage.
+\section{Results and Discussion}
+\label{sec:orgc0d7af9}
+\subsection{I vs V value tables}
+\label{sec:org14ea791}
+\begin{center}
+\includegraphics[width=.9\linewidth]{image3.jpg}
+\end{center}
+\subsection{linear I vs V graphs}
+\label{sec:org07b8a48}
+\begin{center}
+\includegraphics[width=.9\linewidth]{image4.jpg}
+\end{center}
+\begin{center}
+\includegraphics[width=.9\linewidth]{image5.jpg}
+\end{center}
+\subsection{logarithmic I vs V}
+\label{sec:orge8fdfea}
+\begin{center}
+\includegraphics[width=.9\linewidth]{image6.jpg}
+\end{center}
+\begin{center}
+\includegraphics[width=.9\linewidth]{image7.jpg}
+\end{center}
+\subsection{Measured leakage currents}
+\label{sec:org9a649f3}
+\begin{itemize}
+\item 1N4004: 0.026\(\mu\) A
+\item 1N914: 0.007\(\mu\) A
+\item yellow LED: 0.004\(\mu\) A
+\item red LED: 0.014\(\mu\) A
+\end{itemize}
+\subsection{Discussion}
+\label{sec:org08f48f1}
+All the graphs produced are very much as expected. For I vs V on a linear scale the exponential relationship defined by the ideal diode equation and Figure 1 can be seen. On a semilog scale this causes a straight line as I is increasing exponentially and it is being plotted on an exponential axis so the result is linear.\newline\newline
+From the curves of I vs V we can estimate the AC and DC resistance at various currents. To estimate AC resistance at a certain log unit we simply take two points from this log unit and use the point slope formula to find an impedance at that current range \(Z = \frac{V_2-V_1}{I_2-I_1}\)\newline\newline
+The curves for the different diodes differ from each other for the reasons mentioned before: they may have different doping levels, manufacturing methods or doping gradients which alter the structure of the p-n junction.\newline\newline
+In our experiment, for example, we measured the forward biased characteristics of a signal and a rectifier diode. A signal diode is made to operate at high speeds and frequencies at small currents whereas a rectifier diode has to be able to deal with higher currents and power dissipation. Hence, the signal diode is likely to be manufactured with a smaller p-n junction. In this particular expirement there is not much difference to be seen between the two diodes as they both have a forward voltage of about 1V, but if we had been operating at higher voltages/currents the signal diode could have been permanently damaged as its maximum rated power dissipation is 500mW while that of the rectifier diode is 1W.\newline\newline
+For the zener diode, the reverse bias current can be seen clearly on the graph. If a forward bias voltage was applied, characteristics similar to that of the other diodes above are to be expected.
+\end{document}
