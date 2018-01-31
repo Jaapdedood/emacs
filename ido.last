@@ -28,6 +28,9 @@
 
 ;; ----- ido-work-directory-list -----
 (
+ "/mnt/c/Users/jaapd/"
+ "/home/jpdd/.emacs.d/config/"
+ "/home/jpdd/.emacs.d/"
  "/mnt/c/Users/jaapd/TensorTest/"
  "/mnt/c/Users/jaapd/SBHacks/mypc/"
  "/mnt/c/Users/jaapd/SBHacks/sbhacks2018/"
@@ -42,7 +45,6 @@
  "/mnt/c/Users/jaapd/TensorTest/Ex_Files_TensorFlow/Exercise Files/02/"
  "/mnt/c/Users/jaapd/PROJECTS/ESW/css/"
  "/mnt/c/Users/jaapd/PROJECTS/ESW/"
- "/mnt/c/Users/jaapd/"
  "/mnt/c/Users/jaapd/Documents/SCHOOL/EE330/Lab6/"
  "/mnt/c/Users/jaapd/Documents/SCHOOL/EE370/Lab12/"
  "/mnt/c/Users/jaapd/Documents/SCHOOL/EE370/Lab11/"
@@ -65,8 +67,6 @@
  "/mnt/c/Users/jaapd/PROJECTS/Greenhouse/"
  "/mnt/c/Users/jaapd/PROJECTS/"
  "/mnt/c/Users/"
- "/home/jpdd/.emacs.d/"
- "/home/jpdd/.emacs.d/config/"
  "/mnt/c/Users/jaapd/Arduino/"
  "/mnt/c/Users/jaapd/ESW/"
  "/mnt/c/Users/jaapd/ESW/css/"
@@ -77,27 +77,31 @@
 
 ;; ----- ido-work-file-list -----
 (
+ "test.v"
+ "init-coding-gen.el"
+ "init-coding-hdl.el"
+ "init.el"
  "File3.py"
  "File2.py"
  "File1.py"
  "uploadtocloud.py"
  "main.py"
  "Display.cpp"
- "scanner.sh"
- "toLCD.txt"
- "HelloWorld.ino"
- "README.md"
 )
 
 ;; ----- ido-dir-file-cache -----
 (
- ("/mnt/c/Users/jaapd/TensorTest/" (23145 12230 897855 600000) "graphs/" "File2.py" "File1.py" "Ex_Files_TensorFlow/" "../" "./")
+ ("/home/jpdd/.emacs.d/config/" (23153 5600 861089 500000) "init-doc-editing.el" "init-coding-web.el" "init-coding-hdl.el" "init-coding-gen.el" "init-coding-c.el" ".#init-coding-hdl.el" "../" "./")
 
- ("/mnt/c/Users/jaapd/" (23145 5331 895118 300000) "VirtualBox VMs/" "Videos/" "usb_driver/" "Tracing/" "tmp/" "TensorTest/" "tensorflow/" "Templates" "Start Menu" "snippets/" "SendTo" "Searches/" "SBHacks/" "Saved Games/" "Roaming/" "Recent" "PROJECTS/" "PrintHood" "Pictures/" "OneDrive/" "ntuser.ini" "NTUSER.DAT{c14a91da-ca94-11e7-a9cd-fe9c0c3a2c49}.TMContainer00000000000000000002.regtrans-ms" "NTUSER.DAT{c14a91da-ca94-11e7-a9cd-fe9c0c3a2c49}.TMContainer00000000000000000001.regtrans-ms" "NTUSER.DAT{c14a91da-ca94-11e7-a9cd-fe9c0c3a2c49}.TM.blf" "ntuser.dat.LOG2" "ntuser.dat.LOG1" "NTUSER.DAT" "NetHood" "My Documents" "Music/" "MicrosoftEdgeBackups/" "Local Settings" "Links/" "IntelGraphicsProfiles/" "init.el" "Favorites/" "Downloads/" "Documents/" "Desktop/" "Cookies" "Contacts/" "config/" "Arduino/" "Application Data" "AppData/" "3D Objects/" ".VirtualBox/" ".jssc/" ".galileo/" "#test.org#" "#test.c#" "../" "./")
+ ("/home/jpdd/.emacs.d/" (23153 5600 171855 500000) "snippets/" "places" "init.el~" "init.el" "ido.last" "elpa/" "config/" "backups/" "auto-save-list/" ".git/" "../" "./")
+
+ ("/mnt/c/Users/jaapd/TensorTest/" (23146 47506 408261 600000) "graphs/" "File3.py" "File2.py" "File1.py" "Ex_Files_TensorFlow/" ".#File4.py" ".#File3.py" "#File4.py#" "#File3.py#" "../" "./")
+
+ ("/mnt/c/" (23152 57213 711013 100000) "Windows/" "Users/" "System Volume Information/" "Riot Games/" "Recovery/" "ProgramData/" "Program Files (x86)/" "Program Files/" "PerfLogs/" "OneDriveTemp/" "National Instruments Downloads/" "Intel/" "ESD/" "EAGLE 8.3.2/" "DRIVERS/" "Documents and Settings" "Config.Msi/" "Cadence/" "Autodesk/" "64d5b35d1e64df6771586470b5/" "$Recycle.Bin/" "../" "./")
+
+ ("/mnt/c/Users/jaapd/" (23153 5152 708918 100000) "VirtualBox VMs/" "Videos/" "verilog-mode.el" "usb_driver/" "Tracing/" "tmp/" "TensorTest/" "tensorflow/" "Templates" "Start Menu" "snippets/" "SendTo" "Searches/" "Scholarships.org" "SBHacks/" "Saved Games/" "Roaming/" "Recent" "PROJECTS/" "PrintHood" "Pictures/" "OneDrive/" "ntuser.ini" "NTUSER.DAT{c14a91da-ca94-11e7-a9cd-fe9c0c3a2c49}.TMContainer00000000000000000002.regtrans-ms" "NTUSER.DAT{c14a91da-ca94-11e7-a9cd-fe9c0c3a2c49}.TMContainer00000000000000000001.regtrans-ms" "NTUSER.DAT{c14a91da-ca94-11e7-a9cd-fe9c0c3a2c49}.TM.blf" "ntuser.dat.LOG2" "ntuser.dat.LOG1" "NTUSER.DAT" "NetHood" "My Documents" "Music/" "MicrosoftEdgeBackups/" "Local Settings" "Links/" "IntelGraphicsProfiles/" "init.el" "Favorites/" "Downloads/" "Documents/" "Desktop/" "Cookies" "Contacts/" "config/" "Arduino/" "Application Data" "AppData/" "3D Objects/" ".VirtualBox/" ".jssc/" ".galileo/" "#test.org#" "#test.c#" "../" "./")
 
  ("/mnt/c/Users/jaapd/tensorflow/" (23133 53382 178210 700000) "share/" "pip-selfcheck.json" "lib/" "include/" "bin/" "../" "./")
-
- ("/home/jpdd/.emacs.d/" (23142 61977 561725 600000) "snippets/" "places" "init.el~" "init.el" "ido.last" "elpa/" "config/" "backups/" "auto-save-list/" ".git/" "../" "./")
 
  ("/mnt/c/Users/jaapd/PROJECTS/" (23143 55627 528747 100000) "sophEE/" "main.c" "livepage/" "IEEE/" "Greenhouse/" "ESW_files/" "ESW/" "CAD/" ".#notes.org" ".##notes.org#" "#test.c#" "#notes.org#" "##notes.org##" "../" "./")
 
@@ -124,8 +128,6 @@
  ("/mnt/c/Users/jaapd/Downloads/Grove_LCD_RGB_Backlight-master/" (23079 19136 0 0) "rgb_lcd.h" "rgb_lcd.cpp" "README.md" "License.txt" "keywords.txt" "examples/" "../" "./")
 
  ("/mnt/c/Users/jaapd/Downloads/" (23139 9919 806437 100000) "__MACOSX/" "theleagueof-league-gothic-64c3ede/" "SparkFun-Eagle-Libraries-master/" "plaza-human.fall.flat.holiday.zip" "plaza-human.fall.flat.holiday/" "output_20180120_0214.xls" "mlh-quick-start-guide.pdf" "mcserver/" "Master SI Syllabus - Spring 2017.pdf" "Lunar Meet 2018 tentative Start list.xlsx" "LTSpice-Libraries-master/" "kali-linux-2017.3-vm-i386/" "January 2018 - SIL - Timesheet JaapdeDood.xlsx" "homeautomation-dragonboard-lab_handout_082416.pdf" "hc05test2/" "Grove_LCD_RGB_Backlight-master/" "GoogleCloudSDKInstaller.exe" "fritzing.0.9.3b.64.pc/" "Factorio.v0.15.40/" "ee5dbcfdd045fa48a27d56664411d41c-5966d71d4356b91d96f3e4c3f18b657848110a23/" "desktop.ini" "CSULB Chapter logo.png" "Branding-Guidelines-master/" "Boop/" "AUMZJskK8S30.128.mp3" "4495533970_1.pdf" "26677954_700250626840728_3123435221546659383_o.jpg" "13925146_1189768491074297_7533651277707930005_n.png" "0b5003_fdcd3978c3914d0f95e93d1d0acd5f36.jpg" "0b5003_bb4a35952d0049ea9188b3b31183febd.jpg" "0b5003_351dfc1154904bfe91f16b508b838f8d.jpg" "../" "./")
-
- ("/mnt/c/" (23138 59948 430398 700000) "Windows/" "Users/" "System Volume Information/" "Riot Games/" "Recovery/" "ProgramData/" "Program Files (x86)/" "Program Files/" "PerfLogs/" "OneDriveTemp/" "Intel/" "ESD/" "EAGLE 8.3.2/" "DRIVERS/" "Documents and Settings" "Config.Msi/" "Cadence/" "Autodesk/" "64d5b35d1e64df6771586470b5/" "$Recycle.Bin/" "../" "./")
 
  ("/mnt/c/Users/jaapd/Documents/" (23122 44515 142571 900000) "tucson_repair_manual.pdf" "StarCraft II/" "Starcraft/" "StampPlot/" "SCHOOL/" "Resume/" "Program IGESSC 2017.pdf" "poutine.jpg" "Papers/" "My Videos" "My Pictures" "My Music" "MATLAB/" "main_logo2.xcf" "LTspiceXVII/" "League of Legends/" "kiosk_2017-Dec-26_07-02-44AM-000_CustomizedView65158002170_jpeg.jpg" "kiosk_2017-Dec-26_06-35-52AM-000_CustomizedView36795722452_jpeg.jpg" "Inventor Server SDK ACAD 2018/" "images.jpg" "IEE-15-DCI-533_BrandedDesignElements_8_5x11_c_Final3.xcf" "Fritzing/" "FeedbackHub/" "Dolphin Emulator/" "desktop.ini" "Desktop - Shortcut.lnk" "Custom Office Templates/" "csulb_japanese_garden_by_secretcow.jpg" "Books/" "Book1.pdf" "Book1 (version 1).xlsb.xlsx" "Arduino/" "aaaaaa.jpg" "2005-hyundai-tucson-33565.pdf" "../" "./")
 
@@ -192,8 +194,6 @@
  ("/mnt/c/Users/jaapd/Documents/SCHOOL/EE370/Lab1/" (22970 16699 941287 100000) "Untitled1.bs2" "Report1.tex" "Report1.org" "JaapdeDood_Report1.pdf" "image3.PNG" "image2.PNG" "image1.PNG" "auto/" ".#Report1.org" "#Report1.org#" "../" "./")
 
  ("/mnt/c/Users/jaapd/Documents/SCHOOL/" (22966 16056 519357 100000) "ES EYE/" "EE380/" "EE370/" "EE360/" "EE330/" "../" "./")
-
- ("/home/jpdd/.emacs.d/config/" (22836 52764 889663 0) "init-doc-editing.el" "init-coding-web.el" "init-coding-gen.el" "init-coding-c.el" "../" "./")
 
  ("/mnt/c/Users/jaapd/Arduino/" (22835 28426 371993 300000) "photocell/" "change_to_linux/" "#test.c#" "#photocell.ino#" "../" "./")
 

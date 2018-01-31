@@ -1,7 +1,7 @@
 ;;; init-coding-gen.el --- Code for general programming
 
 ;;; Commentary:
-;; General tools for programming across languages. This consists of:
+;; General tools for programming across languages.  This consists of:
 ;; Company: Code completion
 ;; Magit: git/github interface
 ;; Flycheck: syntax checking
@@ -29,7 +29,8 @@
 (use-package yasnippet
   :ensure t
 ;; Causes yas not to load - commented out for now
-;;:defer t 
+  ;;:defer t
+  :diminish yas-minor-mode
   :config (yas-global-mode t)
   )
 

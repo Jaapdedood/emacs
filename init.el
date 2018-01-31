@@ -52,6 +52,9 @@
 ;; === C/C++/Arduino Editing ===
 (load-file "~/.emacs.d/config/init-coding-c.el")
 
+;; == HDL ===
+(load-file"~/.emacs.d/config/init-coding-hdl.el")
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
