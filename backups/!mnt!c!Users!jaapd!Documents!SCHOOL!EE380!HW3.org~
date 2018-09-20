@@ -1,3 +1,0 @@
-\begin{equation}
-P(X=r)=\frac{n!}{x!(n-x)!} p^x q^{n-x}
-\end{equation}

@@ -1,0 +1,32 @@
+
+;; ----- smex-history -----
+(
+ replace-string
+ linum-mode
+ visual-line-mode
+ treemacs
+ anaconda-mode
+ python-mode
+ c++-mode
+)
+
+;; ----- smex-data -----
+(
+ (httpd-start . 1)
+ (treemacs . 6)
+ (compile . 135)
+ (gdb . 31)
+ (treemacs-projectile . 2)
+ (treemacs-delete . 2)
+ (projectile-remove-known-project . 1)
+ (treemacs-refresh . 1)
+ (treemacs-remove-project . 1)
+ (pomidor-quit . 1)
+ (package-list-packages . 1)
+ (c++-mode . 6)
+ (python-mode . 1)
+ (anaconda-mode . 1)
+ (visual-line-mode . 2)
+ (linum-mode . 3)
+ (replace-string . 1)
+)
